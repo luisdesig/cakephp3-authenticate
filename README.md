@@ -1,8 +1,8 @@
 # CakePHP Application Skeleton
 
-Permitir iniciar con una version de cakephp con el modulo authentiate basico preconfigurado
+Permitir iniciar con una version de cakephp con el modulo authenticate basico preconfigurado
 
-
+El campo username fue cambiado por email
 para ingresar al sistema http://localhost/login
     Usuario : admin@admin.com
     Password: admin
