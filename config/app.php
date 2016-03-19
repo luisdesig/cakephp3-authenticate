@@ -216,7 +216,7 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'nonstandard_port_number',
-            'username' => 'root',
+            'username' => 'luisdesigner',
             'password' => '',
             'database' => 'test',
             'encoding' => 'utf8',

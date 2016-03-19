@@ -38,18 +38,16 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
+        
         $this->loadComponent('Flash');
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Session');
-         $this->loadComponent('Auth', [
+        $this->loadComponent('Auth', [
             'loginRedirect' => [
-                'controller' => 'Articles',
+                'controller' => 'Users',
                 'action' => 'index'
             ],
             'logoutRedirect' => [
                 'controller' => 'Users',
-                'action' => 'login',
-                'home'
+                'action' => 'login'
             ],
             'loginAction' => [
                 'controller' => 'Users',
@@ -65,7 +63,7 @@ class AppController extends Controller
                     'scope' => array('status' => 1)
                 ]
             ],
-            'authError' => 'Did you really think you are allowed to see that?'
+            'authError' => 'Proporsione sus credenciales para entraral sistema.'
         ]);
     }
 
