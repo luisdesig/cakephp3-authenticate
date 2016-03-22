@@ -27,8 +27,52 @@ class UsersTable extends Table
         $this->table('users');
         $this->displayField('id');
         $this->primaryKey('id');
-
         $this->addBehavior('Timestamp');
+        
+        $this->addBehavior('Proffer.Proffer', [
+            'foto' => [    // The name of your upload field
+                'root' => WWW_ROOT . 'files', // Customise the root upload folder here, or omit to use the default
+                'dir' => 'fotodir',   // The name of the field to store the folder
+                'thumbnailSizes' => [ // Declare your thumbnails
+                    'thumb' => [   // Define the prefix of your thumbnail
+                        'w' => 150, // Width
+                        'h' => 150, // Height
+                        'crop' => true,  // Crop will crop the image as well as resize it
+                        'jpeg_quality'  => 100,
+                        'png_compression_level' => 9
+                    ],
+                    'mediana' => [     // Define a second thumbnail
+                        'w' => 480,
+                        'h' => 640,
+                        'jpeg_quality'  => 100,
+                        'png_compression_level' => 9
+                    ],
+                    'edit' => [     // Define a second thumbnail
+                        'w' => 250,
+                        'h' => 300,
+                        'jpeg_quality'  => 100,
+                        'png_compression_level' => 9
+                    ],
+                    'ico' => [     // Define a second thumbnail
+                        'w' => 25,
+                        'h' => 25,
+                        'crop' => true,
+                        'jpeg_quality'  => 100,
+                        'png_compression_level' => 9
+                    ],
+                    'icofoto' => [     // Define a second thumbnail
+                        'w' => 80,
+                        'h' => 80,
+                        'crop' => true,
+                        'jpeg_quality'  => 100,
+                        'png_compression_level' => 9
+                    ]
+                ],
+                'thumbnailMethod' => 'php'  // Options are Imagick, Gd or Gmagick
+            ]
+        ]);
+        
+        
 
     }
 

@@ -21,12 +21,14 @@ class UsersController extends AppController
     {
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
+            $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
             if ($user) {
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('Usuario o contraseña son incorrectos'));
         }
+        $this->viewBuilder()->layout('login');
     }
 
     public function logout()
@@ -41,7 +43,18 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->set('users', $this->paginate($this->Users));
+        $users = $this->paginate($this->Users);
+
+        foreach ($users as $id => $user) {
+            $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
+        }
+        
+        $titulo = [ 'titulo' => 'Lista de Usuarios',
+                    'subTitulo' => 'todos los usuarios'
+            ];
+
+        $this->set('titulo', $titulo);
+        $this->set('users', $users);
         $this->set('_serialize', ['users']);
     }
 
@@ -94,15 +107,26 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
+        $modifico = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
+                if ($this->Auth->User('id') ==$user['id']){
+                    $modifico = true;
+                    $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
+                    $user2 = $user->toArray();
+                    unset($user2['password']);
+                    $this->Auth->setUser($user2);
+                }
+               
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
+        if ($modifico == false){ $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';}
+        
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }

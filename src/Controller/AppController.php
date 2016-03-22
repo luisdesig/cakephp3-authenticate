@@ -27,7 +27,6 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
     /**
      * Initialization hook method.
      *
@@ -70,5 +69,7 @@ class AppController extends Controller
     public function beforeFilter(Event $event)
     {
         //$this->Auth->allow(['index', 'view', 'display']);
+        $this->set('usuarioLogueado', $this->Auth->user());
     }
+
 }

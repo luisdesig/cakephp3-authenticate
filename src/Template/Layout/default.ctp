@@ -89,7 +89,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <a href="#">
                           <div class="pull-left">
                             <!-- User Image -->
-                            <img src="img/avatar5.png" class="img-circle" alt="User Image">
+                            <?php echo $this->Html->image($usuarioLogueado['fotodir'].'icofoto_'.$usuarioLogueado['foto'], ['class'=>'img-circle', 'alt'=>'User Image']); ?>
                           </div>
                           <!-- Message title and timestamp -->
                           <h4>
@@ -168,17 +168,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <img src="img/avatar5.png" class="user-image" alt="User Image">
+                  <!--<img src="img/avatar5.png" class="user-image" alt="User Image"> -->
+                  <?php echo $this->Html->image($usuarioLogueado['fotodir'].'ico_'.$usuarioLogueado['foto'], ['class'=>'img-circle', 'alt'=>'User Image']); ?>
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <span class="hidden-xs"><?=$usuarioLogueado['email']?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
-                    <img src="img/avatar5.png" class="img-circle" alt="User Image">
+                    <!--<img src="img/avatar5.png" class="user-image" alt="User Image"> -->
+                    <?php echo $this->Html->image($usuarioLogueado['fotodir'].'thumb_'.$usuarioLogueado['foto'], ['class'=>'img-circle', 'alt'=>'User Image']); ?>
                     <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
+                      <?=$usuarioLogueado['email']?>
+                      <small>Miembro desde <?=$usuarioLogueado['created']?> </small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -199,7 +201,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="logout" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="logout" class="btn btn-default btn-flat">Salir</a>
                     </div>
                   </li>
                 </ul>
@@ -222,10 +224,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="img/avatar5.png" class="img-circle" alt="User Image">
+              <!--<img src="img/avatar5.png" class="user-image" alt="User Image"> -->
+                    <?php echo $this->Html->image($usuarioLogueado['fotodir'].'icofoto_'.$usuarioLogueado['foto'], ['class'=>'img-circle', 'alt'=>'User Image']); ?>
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p><?=$usuarioLogueado['email']?></p>
               <!-- Status -->
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -264,9 +267,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            Page Header
-            <small>Optional description</small>
+          <h1><?php echo $titulo['titulo'];?>
+            <small><?php echo $titulo['subTitulo'];?></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -276,8 +278,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
         <!-- Main content -->
         <section class="content">
+          <div class="row">
             <?= $this->Flash->render() ?>
-          <?= $this->fetch('content') ?>
+            <?= $this->fetch('content') ?>  
+          </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       
