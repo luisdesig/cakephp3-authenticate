@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use App\Controller\TablasController;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Users Controller
@@ -10,7 +12,7 @@ use Cake\Event\Event;
  * @property \App\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
-{
+{   
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -19,11 +21,18 @@ class UsersController extends AppController
 
     public function login()
     {
+        if($this->Auth->user() !== null){
+            //return $this->redirect($this->Auth->redirectUrl());
+        }
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
-            $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
             if ($user) {
+                $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
+                $persona = $this->Users->Personas->get($user['persona_id']);
+                $user['persona'] = $persona->toArray();
+                $user['persona']['nomcompleto'] = $user['persona']['nombres'].' '.$user['persona']['apepaterno'].' '.$user['persona']['apematerno'];
                 $this->Auth->setUser($user);
+                
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('Usuario o contraseña son incorrectos'));
@@ -43,14 +52,16 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->paginate = ['contain' => ['Personas']];
+    
         $users = $this->paginate($this->Users);
 
         foreach ($users as $id => $user) {
             $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
         }
         
-        $titulo = [ 'titulo' => 'Lista de Usuarios',
-                    'subTitulo' => 'todos los usuarios'
+        $titulo = [ 'titulo' => __('Lista de Usuarios'),
+                    'subTitulo' => __('todos los usuarios')
             ];
 
         $this->set('titulo', $titulo);
@@ -79,20 +90,44 @@ class UsersController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add(){
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $persona = $this->Users->Personas->newEntity();
+            $persona = $this->Users->Personas->patchEntity($persona, $this->request->data['personas']);
+            
+            if($this->Users->Personas->save($persona)){
+                $user['persona_id'] = $persona['id'];
+                $user['username'] = $user['email'];
+                $user['activo'] = 'S';
+                $user['eliminado'] = 'N';
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('Usuario creado con éxito.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error(__('No se pudo crear un nuevo usuario. Intentelo nuevamente.'));
+                }
+            }else{
+                $this->Flash->error(__('No se pudo crear una persona para el usuario'));
             }
+            
         }
+
+        $this->set('listaRoles', $this->__getListaRoles());
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
+    }
+    
+    private function __getListaRoles(){
+        $tabla = new TablasController(); 
+        $roles = $tabla->getRolesUsuario()->toArray();
+        
+        $listaRoles =[];
+        foreach ($roles as $rol){
+            $listaRoles[$rol['id']] = $rol['nombre'];
+        }
+        return $listaRoles;
     }
 
     /**
@@ -105,7 +140,7 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['Personas']
         ]);
         $modifico = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -127,6 +162,7 @@ class UsersController extends AppController
         }
         if ($modifico == false){ $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';}
         
+        $this->set('listaRoles', $this->__getListaRoles());
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
@@ -148,5 +184,39 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function recuperarpass() {
+        $user = $this->Users->newEntity();
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->find('all')->where(['username'=>$this->request->data['username']])->first();
+            /*
+            $articles = TableRegistry::get('Articles');
+            $article = $articles->find('all')->where(['id' => 2])->first();
+            
+            $article->title = 'My new title';
+            $articles->save($article);
+            */
+            
+            
+            $token = date("Y-m-d G:i:s"); ;
+            
+            $user['passtoken'] = (new DefaultPasswordHasher)->hash($token);
+            $user['passtokenfecha'] = $token;
+            
+            $this->Users->save($user);
+            /*
+            if (empty($user)) {
+                $this->Session->setflash('Lo sentimos pero no encontramos el usuario que indicó');
+                //$this->redirect('/users/forgot_password');
+            } else {
+                $user = []; //$this->__generatePasswordToken($user);
+            //    if ($this->User->save($user) && $this->__sendForgotPasswordEmail($user['User']['id'])) {
+             //       $this->Session->setflash('Password reset instructions have been sent to your email address.
+					//	You have 24 hours to complete the request.');
+                  //  $this->redirect('/users/login');
+                }*/
+        }
+        $this->set('user', $user);
     }
 }

@@ -28,6 +28,17 @@ class UsersTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Personas', [
+            'className' => 'Personas',
+            'foreignKey' => 'persona_id'
+        ]);
+        
+        $this->hasMany('Rolusers', [
+            'className' => 'Rolusers',
+            'foreignKey' => 'user_id'
+            //'conditions' => ['Addresses.primary' => '1']
+        ]);
         
         $this->addBehavior('Proffer.Proffer', [
             'foto' => [    // The name of your upload field
@@ -54,8 +65,8 @@ class UsersTable extends Table
                         'png_compression_level' => 9
                     ],
                     'ico' => [     // Define a second thumbnail
-                        'w' => 25,
-                        'h' => 25,
+                        'w' => 18,
+                        'h' => 18,
                         'crop' => true,
                         'jpeg_quality'  => 100,
                         'png_compression_level' => 9
@@ -71,9 +82,6 @@ class UsersTable extends Table
                 'thumbnailMethod' => 'php'  // Options are Imagick, Gd or Gmagick
             ]
         ]);
-        
-        
-
     }
 
     /**
@@ -87,15 +95,22 @@ class UsersTable extends Table
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create');
+        
+        $validator
+            ->notEmpty('persona_id', __('No existe una persona relacionada para este usuario.'));
 
         $validator
-            ->allowEmpty('username');
+            ->add('email', 'validFormat', [
+                  'rule' => 'email',
+                  'message' => __('Ingrese un Email válido')
+            ])
+            ->notEmpty('email', __('Debe ingresar el Email del usuario'));
+    
+        $validator
+            ->notEmpty('username', __('Debe ingresar el nombre del usuario'));
 
         $validator
-            ->allowEmpty('password');
-
-        $validator
-            ->allowEmpty('role');
+            ->notEmpty('password', __('ingrese su contraseña'));
 
         return $validator;
     }
@@ -109,7 +124,8 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['username']));
+        $rules->add($rules->isUnique(['username'], __('El nombre de usuario ingresado ya esta en uso.')));
+        $rules->add($rules->isUnique(['email'], __('El Email ingresado ya esta en uso.')));
         return $rules;
     }
 }

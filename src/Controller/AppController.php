@@ -27,6 +27,10 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+    
+    static protected $activo = ['S'=>'Si','N'=>'No'];
+    static protected $eliminado = ['S'=>'Si','N'=>'No'];
+    
     /**
      * Initialization hook method.
      *
@@ -34,10 +38,26 @@ class AppController extends Controller
      *
      * @return void
      */
+     public $helpers = [
+        'Html' => [
+            'className' => 'Bootstrap.BootstrapHtml'
+        ],
+        'Form' => [
+            'className' => 'Bootstrap.BootstrapForm'
+        ],
+        'Paginator' => [
+            'className' => 'Bootstrap.BootstrapPaginator'
+        ],
+        'Modal' => [
+            'className' => 'Bootstrap.BootstrapModal'
+        ]
+    ];
+
     public function initialize()
     {
         parent::initialize();
         
+
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             'loginRedirect' => [
@@ -68,8 +88,9 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        //$this->Auth->allow(['index', 'view', 'display']);
         $this->set('usuarioLogueado', $this->Auth->user());
+        $this->set('activo', ['S'=>'Si','N'=>'No']);
+        $this->set('eliminado', ['S'=>'Si','N'=>'No']);
     }
 
 }

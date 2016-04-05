@@ -168,17 +168,17 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => 'Mail',
-            // The following keys are used in SMTP transports
-            'host' => 'localhost',
-            'port' => 25,
-            'timeout' => 30,
-            'username' => 'user',
-            'password' => 'secret',
-            'client' => null,
-            'tls' => null,
+            'host' => '',
+            'port' =>'' ,
+            'username' => '',
+            'password' => '',
+            'className' => '',
+            'tls' => true
         ],
     ],
+    
+    
+
 
     /**
      * Email delivery profiles

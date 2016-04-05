@@ -2208,7 +2208,7 @@ a:focus {
 }
 .btn-default {
   background-color: #f4f4f4;
-  color: #444;
+  color: #fff; /*texto de botones por opacos pasado a blanco*/
   border-color: #ddd;
 }
 .btn-default:hover,

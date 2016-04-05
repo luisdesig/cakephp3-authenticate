@@ -11,7 +11,8 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "doctrine/migrations": "^1.4",
-        "davidyell/proffer": "~0.6"
+        "davidyell/proffer": "~0.6",
+        "holt59/cakephp3-bootstrap-helpers": "dev-master"
     },
     "require-dev": {
         "psy/psysh": "@stable",

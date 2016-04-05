@@ -50,21 +50,86 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     
 </head>
   <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Main content -->
-        <section class="content">
+    <div class="container">
+      <div class="row" id="pwd-container">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <section class="login-form">
+            <div class="row text-center" style="margin-bottom:20px;">
+              <img src="http://trujinet.com/img/trujinetcom-logo-1458057830.jpg" class="img-responsive center-block" alt="www.trujinet.com" />
+            </div>
             <?= $this->Flash->render() ?>
-          <?= $this->fetch('content') ?>
-        </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
-     </div>
+            <?= $this->fetch('content') ?>
+            <div class="form-links">
+              <a href="http://www.trujinet.com">www.trujinet.com</a>
+            </div>
+          </section>  
+          </div>
+          <div class="col-md-4">
+        </div>
+      </div>
+    </div>
 
     <!-- REQUIRED JS SCRIPTS -->
 
     <?= $this->Html->script('jQuery-2.1.4.min.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?> 
+
+<style type="text/css">
+.progress-bar {
+    color: #333;
+} 
+
+.form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+	}
+
+body {
+	background: url() no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.login-form {
+	margin-top: 60px;
+}
+
+form[role=login] {
+	color: #5d5d5d;
+	background: #f2f2f2;
+	padding: 26px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+	form[role=login] img {
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 35px;
+	}
+	form[role=login] input,
+	form[role=login] button {
+		font-size: 18px;
+		margin: 16px 0;
+	}
+	form[role=login] > div {
+		text-align: center;
+	}
+	
+.form-links {
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 50px;
+}
+	.form-links a {
+		color: #000;
+	}
+</style>
+
 </body>
 </html>

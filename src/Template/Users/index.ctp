@@ -1,4 +1,8 @@
 
+<?php 
+$this->Html->addCrumb('Users', '/users' , ['class'=>'active']);
+//$this->Html->addCrumb('User', ['controller' => 'Users', 'action' => 'index'], ['class'=>'active']);
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -61,10 +65,10 @@
             </div>
         </div>
     </div>
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-    </ul>
-</div>
+    <div class="col-md-12">
+        <h3><?= __('Actions') ?></h3>
+        <ul class="side-nav">
+            <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
+        </ul>
+    </div>
 </div>

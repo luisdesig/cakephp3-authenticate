@@ -28,7 +28,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
+
     <?= $this->Html->css('bootstrap.min.css') ?>
+    <?= $this->Html->css('bootstrap-timepicker.min.css') ?>
+    <?= $this->Html->css('select2.min.css') ?>
+    
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -48,12 +52,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-
+<?= $this->Html->script('jQuery-2.1.4.min.js') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
   <body class="hold-transition skin-blue sidebar-mini">
+
     <div class="wrapper">
       <header class="main-header">
         <!-- Logo -->
@@ -171,7 +176,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                   <!--<img src="img/avatar5.png" class="user-image" alt="User Image"> -->
                   <?php echo $this->Html->image($usuarioLogueado['fotodir'].'ico_'.$usuarioLogueado['foto'], ['class'=>'img-circle', 'alt'=>'User Image']); ?>
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs"><?=$usuarioLogueado['email']?></span>
+                  <span class="hidden-xs"><?=$usuarioLogueado['persona']['nomcompleto']?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
@@ -179,7 +184,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <!--<img src="img/avatar5.png" class="user-image" alt="User Image"> -->
                     <?php echo $this->Html->image($usuarioLogueado['fotodir'].'thumb_'.$usuarioLogueado['foto'], ['class'=>'img-circle', 'alt'=>'User Image']); ?>
                     <p>
-                      <?=$usuarioLogueado['email']?>
+                      <?=$usuarioLogueado['persona']['nomcompleto']?>
                       <small>Miembro desde <?=$usuarioLogueado['created']?> </small>
                     </p>
                   </li>
@@ -228,7 +233,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <?php echo $this->Html->image($usuarioLogueado['fotodir'].'icofoto_'.$usuarioLogueado['foto'], ['class'=>'img-circle', 'alt'=>'User Image']); ?>
             </div>
             <div class="pull-left info">
-              <p><?=$usuarioLogueado['email']?></p>
+              <p><?=$usuarioLogueado['persona']['nomcompleto']?></p>
               <!-- Status -->
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -267,13 +272,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
+          <?php 
+          if (!isset($titulo)){
+            $titulo['titulo']='';
+            $titulo['subTitulo']='';
+          }
+          ?>
           <h1><?php echo $titulo['titulo'];?>
             <small><?php echo $titulo['subTitulo'];?></small>
           </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
-          </ol>
+            <?php 
+            $this->Html->addCrumb('Inicio', '/', ['class'=> 'fa fa-dashboard']);
+            echo $this->Html->getCrumbList();
+            ?>
         </section>
 
         <!-- Main content -->
@@ -299,9 +310,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <!-- REQUIRED JS SCRIPTS -->
 
-    <?= $this->Html->script('jQuery-2.1.4.min.js') ?>
+    
     <?= $this->Html->script('bootstrap.min.js') ?>
     <?= $this->Html->script('app.js') ?>
+    <?= $this->Html->script('bootstrap-filestyle.min.js') ?>
+    <?= $this->Html->script('select2.full.min.js') ?>
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the

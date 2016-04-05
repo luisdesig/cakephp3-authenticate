@@ -204,3 +204,4 @@ Type::build('datetime')->useLocaleParser();
 
 Plugin::load('Migrations');
 Plugin::load('Proffer');
+Plugin::load('Bootstrap');
