@@ -16,28 +16,34 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login','add','logout']);
+        $this->Auth->allow(['login','recuperarpass','logout']);
     }
 
     public function login()
     {
+        $user =  $this->Users->newEntity();
         if($this->Auth->user() !== null){
             //return $this->redirect($this->Auth->redirectUrl());
         }
         if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
-                $persona = $this->Users->Personas->get($user['persona_id']);
-                $user['persona'] = $persona->toArray();
-                $user['persona']['nomcompleto'] = $user['persona']['nombres'].' '.$user['persona']['apepaterno'].' '.$user['persona']['apematerno'];
-                $this->Auth->setUser($user);
-                
-                return $this->redirect($this->Auth->redirectUrl());
+            $user = $this->Users->newEntity($this->request->data, ['validation'=>'default']);
+            if (count($user->errors())==0){
+                $user = $this->Auth->identify();
+                if ($user) {
+                    $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
+                    $persona = $this->Users->Personas->get($user['persona_id']);
+                    $user['persona'] = $persona->toArray();
+                    $user['persona']['nomcompleto'] = $user['persona']['nombres'].' '.$user['persona']['apepaterno'].' '.$user['persona']['apematerno'];
+                    $this->Auth->setUser($user);
+                    
+                    return $this->redirect($this->Auth->redirectUrl());
+                }
+                $this->Flash->error(__('Usuario o contraseña son incorrectos'));
             }
-            $this->Flash->error(__('Usuario o contraseña son incorrectos'));
+            
         }
         $this->viewBuilder()->layout('login');
+        $this->set('user', $user);
     }
 
     public function logout()
@@ -190,33 +196,18 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->find('all')->where(['username'=>$this->request->data['username']])->first();
-            /*
-            $articles = TableRegistry::get('Articles');
-            $article = $articles->find('all')->where(['id' => 2])->first();
-            
-            $article->title = 'My new title';
-            $articles->save($article);
-            */
-            
-            
-            $token = date("Y-m-d G:i:s"); ;
-            
-            $user['passtoken'] = (new DefaultPasswordHasher)->hash($token);
-            $user['passtokenfecha'] = $token;
-            
-            $this->Users->save($user);
-            /*
             if (empty($user)) {
-                $this->Session->setflash('Lo sentimos pero no encontramos el usuario que indicó');
-                //$this->redirect('/users/forgot_password');
-            } else {
-                $user = []; //$this->__generatePasswordToken($user);
-            //    if ($this->User->save($user) && $this->__sendForgotPasswordEmail($user['User']['id'])) {
-             //       $this->Session->setflash('Password reset instructions have been sent to your email address.
-					//	You have 24 hours to complete the request.');
-                  //  $this->redirect('/users/login');
-                }*/
+                $this->Flash->error(__('Lo sentimos pero no tenemos un usuario con los datos indicados'));
+            }else{
+                $token = date("Y-m-d G:i:s"); ;
+                
+                $user['passtoken'] = (new DefaultPasswordHasher)->hash($token);
+                $user['passtokenfecha'] = $token;
+                
+                $this->Users->save($user);
+            }
         }
+        $this->viewBuilder()->layout('login');
         $this->set('user', $user);
     }
 }

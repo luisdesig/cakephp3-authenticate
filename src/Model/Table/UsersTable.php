@@ -110,7 +110,7 @@ class UsersTable extends Table
             ->notEmpty('username', __('Debe ingresar el nombre del usuario'));
 
         $validator
-            ->notEmpty('password', __('ingrese su contraseña'));
+            ->notEmpty('password', __('Ingrese su contraseña'));
 
         return $validator;
     }
@@ -128,4 +128,5 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['email'], __('El Email ingresado ya esta en uso.')));
         return $rules;
     }
+
 }

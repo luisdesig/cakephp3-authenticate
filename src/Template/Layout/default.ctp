@@ -34,12 +34,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->css('select2.min.css') ?>
     
     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <?= $this->Html->css('font-awesome.min.css') ?>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <?= $this->Html->css('ionicons.min.css') ?>
     <!-- Theme style -->
     
-    <?= $this->Html->css('AdminLTE.css') ?>
+    <?= $this->Html->css('AdminLTE-2.3.3.min.css') ?>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
@@ -203,10 +203,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                      <?=$this->Html->link('Profile', 'users/edit/'.$usuarioLogueado['id'],['class'=>'btn btn-default btn-flat'])?>
                     </div>
                     <div class="pull-right">
-                      <a href="logout" class="btn btn-default btn-flat">Salir</a>
+                      <?=$this->Html->link('salir', 'users/logout',['class'=>'btn btn-default btn-flat'])?>
                     </div>
                   </li>
                 </ul>

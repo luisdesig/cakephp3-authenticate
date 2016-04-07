@@ -34,7 +34,7 @@ $this->Html->addCrumb('Editar usuario', '', ['class'=>'active']);
                         'options'=>$listaRoles,
                         'type' => 'select',
                         ]);
-                     <?php echo $this->Form->input('foto',[
+                     echo $this->Form->input('foto',[
                     'type' =>'file'
                     ,'class'=>'filestyle'
                     ,'data-buttonName'=>'btn-primary'
