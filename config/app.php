@@ -168,13 +168,23 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'host' => '',
-            'port' =>'' ,
-            'username' => '',
-            'password' => '',
-            'className' => '',
-            'tls' => true
-        ],
+             'host' => 'ssl://smtp.gmail.com', //servidor smtp con encriptacion ssl
+            'port' => 465, //puerto de conexion
+            //'tls' => true, //true en caso de usar encriptacion tls
+            //cuenta de correo gmail completa desde donde enviaran el correo
+            'username' => 'sucorreo@gmail.com', 
+            'password' => 'supass@', //contrasena
+            //Establecemos que vamos a utilizar el envio de correo por smtp
+            'className' => 'Smtp', 
+            //evitar verificacion de certificado ssl ---IMPORTANTE---
+            /*'context' => [
+            'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+            ]
+            ]*/
+        ]
     ],
     
     

@@ -54,13 +54,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
  <div class="login-box">
       <div class="login-logo">
         <a href="">
-          <img src="http://trujinet.com/img/trujinetcom-logo-1458057830.jpg" class="img-responsive center-block" alt="www.trujinet.com" />
+          <?=$this->Html->image('logo.png',['class'=>'img-responsive center-block']);?>
         </a>
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body">
-         <?= $this->fetch('content') ?>
-        
+        <?= $this->Flash->render()?>
+        <?= $this->fetch('content')?>
       </div>
       <!-- /.login-box-body -->
     </div>

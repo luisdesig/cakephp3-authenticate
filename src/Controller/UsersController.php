@@ -5,6 +5,9 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use App\Controller\TablasController;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\Time;
+use Cake\Network\Email\Email;
+use Cake\Core\Configure;
 
 /**
  * Users Controller
@@ -16,14 +19,14 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login','recuperarpass','logout']);
+        $this->Auth->allow(['login','recuperarpass', 'resetpass','logout']);
     }
 
     public function login()
     {
         $user =  $this->Users->newEntity();
         if($this->Auth->user() !== null){
-            //return $this->redirect($this->Auth->redirectUrl());
+            return $this->redirect($this->Auth->redirectUrl());
         }
         if ($this->request->is('post')) {
             $user = $this->Users->newEntity($this->request->data, ['validation'=>'default']);
@@ -35,7 +38,6 @@ class UsersController extends AppController
                     $user['persona'] = $persona->toArray();
                     $user['persona']['nomcompleto'] = $user['persona']['nombres'].' '.$user['persona']['apepaterno'].' '.$user['persona']['apematerno'];
                     $this->Auth->setUser($user);
-                    
                     return $this->redirect($this->Auth->redirectUrl());
                 }
                 $this->Flash->error(__('Usuario o contraseña son incorrectos'));
@@ -148,6 +150,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Personas']
         ]);
+        
         $modifico = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
@@ -167,7 +170,6 @@ class UsersController extends AppController
             }
         }
         if ($modifico == false){ $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';}
-        
         $this->set('listaRoles', $this->__getListaRoles());
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
@@ -194,6 +196,7 @@ class UsersController extends AppController
     
     public function recuperarpass() {
         $user = $this->Users->newEntity();
+        $envioCorreo = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->find('all')->where(['username'=>$this->request->data['username']])->first();
             if (empty($user)) {
@@ -204,10 +207,104 @@ class UsersController extends AppController
                 $user['passtoken'] = (new DefaultPasswordHasher)->hash($token);
                 $user['passtokenfecha'] = $token;
                 
-                $this->Users->save($user);
+                $this->log('listo para enviar correo','debug');
+                if ($this->Users->save($user)){
+                    $persona = $this->Users->Personas->get($user['persona_id']);
+
+                    $data = ['empresa'=>Configure::read('Company')];
+                    $data['token']= $user['passtoken'];
+                    $data['titulo'] = Configure::read('Company')['name'].':: Dirección para Reseteo de Password';
+                    $data['persona'] = [
+                        'nombres' => $persona['nombres'],
+                        'apepaterno' => $persona['apepaterno'],
+                        'apematerno' => $persona['apematerno']
+                        ];
+                    
+                    if ($this->__correoResetPass($data)){
+                        $this->log('se envio correo','debug');
+                        $envioCorreo = true;
+                    }
+                }
             }
         }
         $this->viewBuilder()->layout('login');
-        $this->set('user', $user);
+        $this->set('envioCorreo', $envioCorreo);
     }
+
+    public function resetpass(){
+        $this->log('funcion: resetpass', 'debug');
+        $user = $this->Users->newEntity();
+        $token ='';
+        $resetExito = false;
+        
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->log('inicio validacion y cambio de pass', 'debug');
+            if($this->request->data['nuevo-pass'] != $this->request->data['confirm-pass']){
+                $this->log('Las contraseñas no coinciden','debug');
+                $this->Flash->error(__('La nueva contraseña y su confirmación no noinciden. Vuelva a intentarlo.'));
+            }else{
+                 $this->log('Las contraseñas coinciden','debug');
+                if ($this->request->data && $this->request->data['token']){
+                    $this->log('setiene clave token','debug');
+                    $user = $this->Users->newEntity();
+                    $user = $this->Users->find('all')->where(['passtoken'=>$this->request->data['token']])->first();
+                    if($user){
+                        $this->log('encontro el token en la base de datos','debug');
+                        $fechaToken = new Time($user['passtokenfecha']->format('Y-m-d H:i:s'));
+                        if (!$fechaToken->wasWithinLast(2)){
+                            $this->log('la clave token caduco','debug');
+                            $this->Flash->error(__('La clave token ya caduco. Genere una nueva y vuelva a intentarlo'));
+                        }else{
+                            $this->log('la clave token esta vigente','debug');
+                            $user['password'] = $this->request->data['nuevo-pass'];
+                            $user['passtoken']= '';
+                            $user['passtokenfecha'] = '';
+                            
+                            if ($this->Users->save($user)){
+                                 $this->Flash->success(__('Su contraseña se cambio con exito.'));
+                                 $resetExito = true;
+                                 return $this->redirect($this->Auth->logout());
+                            }
+                        }
+                    }
+                }
+            }
+        }else{
+            $this->log('ingresa por url','debug');
+            if ($this->request->query['token']){
+                $this->log('mostrar formulario reseteo', 'debug');
+                $token = $this->request->query['token']; 
+            }
+        } 
+
+        $this->viewBuilder()->layout('login');
+        $this->set('user','');
+        $this->set('token',$token);
+        $this->set('resetExito', $resetExito);
+    }
+    
+    /**
+     * Plantillas de Emails
+     */
+    
+    private function __correoResetPass($data){
+        $this->log('inicio envio emai','debug');
+         /*enviando el correo*/
+        $correo = new Email(); //instancia de correo
+        $correo
+          ->transport('default') //nombre del configTrasnport que acabamos de configurar
+          ->template('resetpassword') //plantilla a utilizar
+          ->emailFormat('html') //formato de correo
+          ->to('luis.aguilarpereda@gmail.com') //correo para
+          ->from('luchitodesigner@gmail.com') //correo de
+          ->subject((($data['titulo']==null || $data['titulo']=='')?'Dirección para Reseteo de Password':$data['titulo'])) //asunto
+          ->viewVars(['data'=> $data])
+          ;
+
+        return $correo->send();
+    }
+    
+     /**
+     * Fin Plantillas de Emails
+     */
 }

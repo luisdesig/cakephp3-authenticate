@@ -3,7 +3,7 @@
     <?=__( 'Regístrese para iniciar Sesión')?>
 </p>
 
-<?= $this->Form->create($user,['novalidate'=>'novalidate']) ?>
+<?= $this->Form->create($user,['role'=>'form', 'novalidate'=>'novalidate']) ?>
     <div class="form-group has-feedback">
         <?=$this->Form->input('email', ['label'=>false,'placeholder'=>__('Username'), 'class'=>'form-control'])?>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -32,8 +32,8 @@
         <!-- /.col -->
     </div>
     <div> 
-        <?=$this->Html->link(__('Olvidé mi Password'), ['action'=>'recpassword'])?>
+        <?=$this->Html->link(__('Olvidé mi Password'), 'recpassword')?>
         <br>
-        <a href="register.html" class="text-center"><?=__('Registrarme')?></a>
+        <a href="javascript:void(0);" class="text-center"><?=__('Registrarme')?></a>
     </div>
 <?=$this->Form->end() ?>

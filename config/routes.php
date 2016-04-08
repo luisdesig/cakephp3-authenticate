@@ -58,6 +58,7 @@ Router::scope('/', function ($routes) {
      $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
      $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
      $routes->connect('/recpassword', ['controller' => 'Users', 'action' => 'recuperarpass']);
+     $routes->connect('/reset', ['controller' => 'Users', 'action' => 'resetpass']);
 
     /**
      * Connect catchall routes for all controllers.

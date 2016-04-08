@@ -22,9 +22,9 @@ $this->Html->addCrumb('Editar usuario', '', ['class'=>'active']);
             <div class="col-md-8">
                 <?php
                     
-                    echo $this->Form->input('personas.nombres', ['label'=>'Nombres', 'class'=>'form-control']);
-                    echo $this->Form->input('personas.apepaterno', ['label'=>'Apellido Paterno', 'class'=>'form-control']);
-                    echo $this->Form->input('personas.apematerno', ['label'=>'Apellido Materno', 'class'=>'form-control']);
+                    echo $this->Form->input('persona.nombres', ['label'=>'Nombres']);
+                    echo $this->Form->input('persona.apepaterno', ['label'=>'Apellido Paterno']);
+                    echo $this->Form->input('persona.apematerno', ['label'=>'Apellido Materno']);
                     echo $this->Form->input('email', ['label'=>__('Email (Se usara como nombre de usuario)'), 'class'=>'form-control']);
                     echo $this->Form->input('password', ['label'=>'Password','class'=>'form-control']); 
                     
