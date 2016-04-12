@@ -46,6 +46,7 @@ class UsersController extends AppController
         }
         $this->viewBuilder()->layout('login');
         $this->set('user', $user);
+        $this->set('title', __('Ingreso al Sistema'));
     }
 
     public function logout()
@@ -75,6 +76,7 @@ class UsersController extends AppController
         $this->set('titulo', $titulo);
         $this->set('users', $users);
         $this->set('_serialize', ['users']);
+        $this->set('title', __('Lista de Usuarios'));
     }
 
     /**
@@ -91,6 +93,7 @@ class UsersController extends AppController
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
+        $this->set('title', __('Datos del Usuario'));
     }
 
     /**
@@ -121,10 +124,12 @@ class UsersController extends AppController
             }
             
         }
-
+        
         $this->set('listaRoles', $this->__getListaRoles());
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
+        $this->set('title', __( 'Registrar nuevo Usuario'));
+
     }
     
     private function __getListaRoles(){
@@ -145,8 +150,7 @@ class UsersController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null){
         $user = $this->Users->get($id, [
             'contain' => ['Personas']
         ]);
@@ -173,6 +177,7 @@ class UsersController extends AppController
         $this->set('listaRoles', $this->__getListaRoles());
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
+        $this->set('title', __('Actualizar datos del usuario'));
     }
 
     /**
@@ -182,8 +187,7 @@ class UsersController extends AppController
      * @return void Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null){
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
@@ -220,7 +224,7 @@ class UsersController extends AppController
                         'apematerno' => $persona['apematerno']
                         ];
                     
-                    if ($this->__correoResetPass($data)){
+                    if ($this->__emailResetPass($data)){
                         $this->log('se envio correo','debug');
                         $envioCorreo = true;
                     }
@@ -229,6 +233,7 @@ class UsersController extends AppController
         }
         $this->viewBuilder()->layout('login');
         $this->set('envioCorreo', $envioCorreo);
+        $this->set('title', __('Recuperar Contraseña'));
     }
 
     public function resetpass(){
@@ -281,23 +286,41 @@ class UsersController extends AppController
         $this->set('user','');
         $this->set('token',$token);
         $this->set('resetExito', $resetExito);
+        $this->set('title', __('Recuperar Contraseña'));
     }
     
     /**
      * Plantillas de Emails
      */
     
-    private function __correoResetPass($data){
-        $this->log('inicio envio emai','debug');
+    private function __emailResetPass($data){
+        $this->log('inicio envio emai Reset Password','debug');
          /*enviando el correo*/
         $correo = new Email(); //instancia de correo
         $correo
           ->transport('default') //nombre del configTrasnport que acabamos de configurar
           ->template('resetpassword') //plantilla a utilizar
           ->emailFormat('html') //formato de correo
-          ->to('luis.aguilarpereda@gmail.com') //correo para
-          ->from('luchitodesigner@gmail.com') //correo de
+          ->to('para@gmail.com') //correo para
+          ->from('de@gmail.com') //correo de
           ->subject((($data['titulo']==null || $data['titulo']=='')?'Dirección para Reseteo de Password':$data['titulo'])) //asunto
+          ->viewVars(['data'=> $data])
+          ;
+
+        return $correo->send();
+    }
+    
+    private function __emailBienVenida($data){
+        $this->log('inicio envio emai Bienvenida','debug');
+         /*enviando el correo*/
+        $correo = new Email(); //instancia de correo
+        $correo
+          ->transport('default') //nombre del configTrasnport que acabamos de configurar
+          ->template('bienvenida') //plantilla a utilizar
+          ->emailFormat('html') //formato de correo
+          ->to('para@gmail.com') //correo para
+          ->from('de@gmail.com') //correo de
+          ->subject((($data['titulo']==null || $data['titulo']=='')?'Bienvenido!':$data['titulo'])) //asunto
           ->viewVars(['data'=> $data])
           ;
 

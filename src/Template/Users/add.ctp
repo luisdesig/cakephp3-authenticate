@@ -9,53 +9,48 @@ $this->Html->addCrumb('Registrar usuario', '', ['class'=>'active']);
     });
     
 </script>
-<div class="col-md-12">
-    <?=$this->Form->create($user, ['role'=>'form', 'novalidate'=>'novalidate' ,'type' =>'file']) ?>
-        <fieldset>
-            <legend>
-                <?=__( 'Registrar nuevo Usuario') ?>
-            </legend>
-            <div class="col-md-8 col-md-offset-2">
-                <?php
-                    
-                    echo $this->Form->input('personas.nombres', ['label'=>'Nombres', 'class'=>'form-control']);
-                    echo $this->Form->input('personas.apepaterno', ['label'=>'Apellido Paterno', 'class'=>'form-control']);
-                    echo $this->Form->input('personas.apematerno', ['label'=>'Apellido Materno', 'class'=>'form-control']);
-                    echo $this->Form->input('email', ['label'=>__('Email (Se usara como nombre de usuario)'), 'class'=>'form-control']);
-                    echo $this->Form->input('password', ['label'=>'Password','class'=>'form-control']); 
-                    
-                    echo $this->Form->input('rolusers.tabla_id', [
-                        'label'=>'Rol', 
-                        'class'=>'form-control',
-                        'options'=>$listaRoles,
-                        'type' => 'select',
-                        ]);
-
-                    echo $this->Form->input('foto',[
-                    'type' =>'file'
-                    ,'class'=>'filestyle'
-                    ,'data-buttonName'=>'btn-primary'
-                    ,'data-buttonText'=>' Seleccionar'
-                    ,'data-size'=>'sm']);?>
-            </div>
-            
-        </fieldset>
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <?=$this->Form->button(__('Guardar'), ['class'=>'btn btn-primary']) ?>
-            </div>
+<div class="col-md-offset-3 col-md-6">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Registrar nuevo Usuario</h3>
         </div>
-        <?=$this->Form->end() ?>    
-        
-</div>
+        <?=$this->Form->create($user, ['role'=>'form', 'novalidate'=>'novalidate' ,'type' =>'file']) ?>
+        <div class="box-body">
+            <?php
+                
+                echo $this->Form->input('personas.nombres', ['label'=>'Nombres', 'class'=>'form-control']);
+                echo $this->Form->input('personas.apepaterno', ['label'=>'Apellido Paterno', 'class'=>'form-control']);
+                echo $this->Form->input('personas.apematerno', ['label'=>'Apellido Materno', 'class'=>'form-control']);
+                echo $this->Form->input('email', ['label'=>__('Email (Se usara como nombre de usuario)'), 'class'=>'form-control']);
+                echo $this->Form->input('password', ['label'=>'Password','class'=>'form-control']); 
+                
+                echo $this->Form->input('rolusers.tabla_id', [
+                    'label'=>'Rol', 
+                    'class'=>'form-control',
+                    'options'=>$listaRoles,
+                    'type' => 'select',
+                    ]);
     
-<div class="col-md-12">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li>
-            <?=$this->Form->postLink( __('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)] ) ?>
-        </li>
-        <li>
-            <?=$this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-    </ul>
+                echo $this->Form->input('foto',[
+                'type' =>'file'
+                ,'class'=>'filestyle'
+                ,'data-buttonName'=>'btn-primary'
+                ,'data-buttonText'=>' Seleccionar'
+                ,'data-size'=>'sm']);?>
+        </div>
+        <div class="box-footer">
+            <div class="btn-group">
+              <?=$this->Form->button(__('Cancelar'), ['type' => 'reset']) ?>
+              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul role="menu" class="dropdown-menu">
+                <li><?=$this->Html->link(__('Lista de Usuarios'), ['action' => 'index']) ?></li></li>
+              </ul>
+            </div>
+            <?=$this->Html->button(__('Guardar'), ['bootstrap-type'=>'primary', 'class'=>'pull-right']) ?>
+         </div>
+        <?=$this->Form->end() ?>  
+    </div>
 </div>

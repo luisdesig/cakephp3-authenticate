@@ -5,8 +5,10 @@ $this->Html->addCrumb('Users', '/users' , ['class'=>'active']);
 ?>
 <div class="row">
     <div class="col-md-12">
-        <div class="box">
+        <div class="box box-primary">
             <div class="box-header with-border">
+                <h3 class="box-title">Usuarios del Sistema</h3>
+                <?=$this->Html->link(__('Nuevo Usuarios'), ['action' => 'add'],['class'=>'pull-right btn btn-primary']) ?>
             </div>
             <div class="box-body">
                 <table class="table">
@@ -62,13 +64,9 @@ $this->Html->addCrumb('Users', '/users' , ['class'=>'active']);
                     <p>
                         <?=$this->Paginator->counter() ?></p>
                 </div>
+               
             </div>
         </div>
-    </div>
-    <div class="col-md-12">
-        <h3><?= __('Actions') ?></h3>
-        <ul class="side-nav">
-            <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-        </ul>
+        
     </div>
 </div>

@@ -10,9 +10,9 @@ $this->Html->addCrumb('Editar usuario', '', ['class'=>'active']);
                 <?=__( 'Editar Usuario') ?>
             </legend>
             <div class="col-md-4">
-                <?php echo $this->Html->image($user['fotodir'].'edit_'.$user['foto'],['class'=>'img-thumbnail img-responsive']); ?>
+                <?php echo $this->Html->image($user['fotodir'].'edit_'.$user['foto'],['class'=>'img-thumbnail img-responsive center-block']); ?>
 
-                <?php echo $this->Form->input('foto',[
+                <?php echo $this->Form->input('Foto',[
                     'type' =>'file'
                     ,'class'=>'filestyle'
                     ,'data-buttonName'=>'btn-primary'
@@ -26,7 +26,7 @@ $this->Html->addCrumb('Editar usuario', '', ['class'=>'active']);
                     echo $this->Form->input('persona.apepaterno', ['label'=>'Apellido Paterno']);
                     echo $this->Form->input('persona.apematerno', ['label'=>'Apellido Materno']);
                     echo $this->Form->input('email', ['label'=>__('Email (Se usara como nombre de usuario)'), 'class'=>'form-control']);
-                    echo $this->Form->input('password', ['label'=>'Password','class'=>'form-control']); 
+                    //echo $this->Form->input('password', ['label'=>'Password','class'=>'form-control']); 
                     
                     echo $this->Form->input('rolusers.tabla_id', [
                         'label'=>'Rol', 
@@ -34,30 +34,17 @@ $this->Html->addCrumb('Editar usuario', '', ['class'=>'active']);
                         'options'=>$listaRoles,
                         'type' => 'select',
                         ]);
-                     echo $this->Form->input('foto',[
-                    'type' =>'file'
-                    ,'class'=>'filestyle'
-                    ,'data-buttonName'=>'btn-primary'
-                    ,'data-buttonText'=>' Seleccionar'
-                    ,'data-size'=>'sm']);?>
+                   ?>
             </div>
         </fieldset>
         <div class="row">
-            <div class="col-md-12 text-right">
-                <?=$this->Form->button(__('Guardar'), ['class'=>'btn btn-primary']) ?>
+            <div class="col-md-offset-4 col-md-4 text-left">
+                <?=$this->Form->postLink( __('Eliminar'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)] ) ?>
+                <?=$this->Html->link(__('Lista de Usuarios'), ['action' => 'index'],['class'=>'btn btn-default']) ?></li>
+            </div>
+            <div class="col-md-4 text-right">
+                <?=$this->Form->button(__('Guardar'), ['bootstrap-type' => 'primary']) ?>
             </div>
         </div>
-        <?=$this->Form->end() ?>    
-        
-</div>
-    
-<div class="col-md-12">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li>
-            <?=$this->Form->postLink( __('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)] ) ?>
-        </li>
-        <li>
-            <?=$this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-    </ul>
+        <?=$this->Form->end() ?>      
 </div>

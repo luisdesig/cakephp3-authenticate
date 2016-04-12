@@ -13,7 +13,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'la Empresa | '.$title;
 ?>
 <!DOCTYPE html>
 <html>
@@ -64,9 +64,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <!-- Logo -->
         <a href="index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><?= $this->fetch('title') ?></span>
+          <span class="logo-mini">
+            <b>Truj</b>
+          </span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b><?= $this->fetch('title') ?></span>
+          <span class="logo-lg">
+            <b>Trujinet</b>.com
+          </span>
         </a>
         
         <!-- Header Navbar -->
@@ -272,15 +276,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <?php 
-          if (!isset($titulo)){
-            $titulo['titulo']='';
-            $titulo['subTitulo']='';
-          }
-          ?>
-          <h1><?php echo $titulo['titulo'];?>
-            <small><?php echo $titulo['subTitulo'];?></small>
-          </h1>
+          <h1><?=$title?></h1>
             <?php 
             $this->Html->addCrumb('Inicio', '/', ['class'=> 'fa fa-dashboard']);
             echo $this->Html->getCrumbList();
@@ -300,10 +296,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          Anything you want
+          Soluciones Integrales
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2015 <?=$this->Html->link('Trujinet.com', '/')?>.</strong> All rights reserved.
       </footer>
         <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
