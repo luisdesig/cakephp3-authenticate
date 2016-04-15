@@ -27,7 +27,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-            <?=$this->Form->button(__('Ingresar'), ['class'=>'btn btn-primary btn-block btn-flat']); ?>
+            <?=$this->Form->button(__('Ingresar'), ['bootstrap-type'=>'primary', 'class'=>'btn-block btn-flat']); ?>
         </div>
         <!-- /.col -->
     </div>
