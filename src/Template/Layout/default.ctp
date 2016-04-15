@@ -278,8 +278,12 @@ $cakeDescription = 'la Empresa | '.$title;
         <section class="content-header">
           <h1><?=$title?></h1>
             <?php 
-            $this->Html->addCrumb('Inicio', '/', ['class'=> 'fa fa-dashboard']);
-            echo $this->Html->getCrumbList();
+            echo $this->Html->getCrumbList([
+                    'firstClass' => 'fa fa-dashboard',
+                    'lastClass' => 'active',
+                    'class' => 'breadcrumb'
+                    ],
+                    'Inicio');
             ?>
         </section>
 
