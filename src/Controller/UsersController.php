@@ -61,18 +61,15 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->paginate = ['contain' => ['Personas']];
-    
+        $this->paginate = ['contain' => ['Personas', 'Rolusers']];
         $users = $this->paginate($this->Users);
-
         foreach ($users as $id => $user) {
             $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
         }
-        
         $titulo = [ 'titulo' => __('Lista de Usuarios'),
                     'subTitulo' => __('todos los usuarios')
             ];
-
+        
         $this->set('titulo', $titulo);
         $this->set('users', $users);
         $this->set('_serialize', ['users']);
@@ -107,7 +104,8 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             $persona = $this->Users->Personas->newEntity();
             $persona = $this->Users->Personas->patchEntity($persona, $this->request->data['personas']);
-            
+             $user['username'] = $user['email'];
+             
             if($this->Users->Personas->save($persona)){
                 $user['persona_id'] = $persona['id'];
                 $user['username'] = $user['email'];
@@ -122,14 +120,12 @@ class UsersController extends AppController
             }else{
                 $this->Flash->error(__('No se pudo crear una persona para el usuario'));
             }
-            
         }
         
         $this->set('listaRoles', $this->__getListaRoles());
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
         $this->set('title', __( 'Registrar nuevo Usuario'));
-
     }
     
     private function __getListaRoles(){
@@ -152,12 +148,21 @@ class UsersController extends AppController
      */
     public function edit($id = null){
         $user = $this->Users->get($id, [
-            'contain' => ['Personas']
+            'contain' => ['Personas','Rolusers']
         ]);
-        
+
         $modifico = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $data = $this->request->data;
+            $data['persona']['fecnacimiento'] = $this->parseFechaPostgresql($data['persona']['fecnacimiento']);
+            if(isset($data['status'])){
+                $data['status'] = ($data['status']=='on'?1:0);
+            }else $data['status'] = 0;
+            
+            $user = $this->Users->patchEntity($user, $data);
+            
+            $user['username'] = $user['email'];
+
             if ($this->Users->save($user)) {
                 if ($this->Auth->User('id') ==$user['id']){
                     $modifico = true;
@@ -167,10 +172,10 @@ class UsersController extends AppController
                     $this->Auth->setUser($user2);
                 }
                
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('El usuario se guardo con exito.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $this->Flash->error(__('No se pudo guardar al usuario. Favor de intentar nuevamente.'));
             }
         }
         if ($modifico == false){ $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';}

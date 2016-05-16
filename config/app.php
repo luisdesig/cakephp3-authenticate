@@ -217,7 +217,7 @@ return [
     'Datasources' => [
         'default' => [
             'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Mysql',
+            'driver' => 'Cake\Database\Driver\Postgres',
             'persistent' => false,
             'host' => 'localhost',
             /**
@@ -225,14 +225,15 @@ return [
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
-            //'port' => 'nonstandard_port_number',
-            'username' => 'luisdesigner',
+            //'port' => 'nonstandard_posudo nano /etc/postgresql/9.3/main/pg_hba.confrt_number',
+            'username' => '',
             'password' => '',
-            'database' => 'test',
+            'database' => '',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
             'log' => false,
+           // 'init' => ['SET datestyle TO ISO, DMY '],
 
             /**
              * Set identifier quoting to true if you are using reserved words or

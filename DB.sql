@@ -1,41 +1,76 @@
--- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 15-09-2015 a las 21:42:47
--- Versión del servidor: 5.6.17
--- Versión de PHP: 5.5.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Estructura de tabla para la tabla  users 
 --
--- Base de datos: `test`
---
+CREATE TABLE  personas  (
+   id  serial primary key,
+   nombres  character varying(100) NOT NULL,
+   apepaterno  character varying(100) NOT NULL,
+   apematerno  character varying(100) NOT NULL,
+   $nomcompleto character varying(300) NOT NULL,
+   fecnacimiento   date  DEFAULT NULL,
+   tbltipdocumento  integer DEFAULT NULL,
+   numerodocumento  character varying(20) DEFAULT NULL,
+   tblgenero  integer DEFAULT NULL,
+   created  timestamp  DEFAULT NULL,
+   modified   timestamp  DEFAULT NULL
+);
 
--- --------------------------------------------------------
+CREATE TABLE users  (
+   id  serial primary key,
+   persona_id  integer NOT NULL,
+   email  character varying(150) NOT NULL,
+   username  character varying(150) DEFAULT NULL,
+   password  character varying(255) DEFAULT NULL,
+   passtoken  character varying(255) DEFAULT NULL,
+   passtokenfecha   timestamp  DEFAULT NULL,
+   fotodir  character varying(250) DEFAULT NULL,
+   foto  character varying(250) DEFAULT NULL,
+   activo  character varying(1) NOT NULL DEFAULT 'S',
+   eliminado  character varying(1) DEFAULT 'N',
+   status  integer NOT NULL DEFAULT '1',
+   created   timestamp  DEFAULT NULL,
+   modified   timestamp  DEFAULT NULL
+);
 
---
--- Estructura de tabla para la tabla `users`
---
+CREATE TABLE rolusers  (
+   id  serial primary key,
+   user_id  integer NOT NULL,
+   tabla_id  integer NOT NULL,
+   activo  character varying(1) NOT NULL DEFAULT 'S',
+   created   timestamp  NOT NULL,
+   modified   timestamp  NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(80) NOT NULL,
-  `username` varchar(50) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `role` varchar(20) DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+CREATE TABLE tablas  (
+   id  serial primary key,
+   parent_id  integer DEFAULT NULL,
+   tipo  integer DEFAULT NULL,
+   valor  integer DEFAULT NULL,
+   codigo  character varying(100) DEFAULT NULL,
+   fecha   timestamp  DEFAULT NULL,
+   nombre  character varying(250) DEFAULT NULL,
+   descripcion  character varying(250) DEFAULT NULL,
+   lft  integer DEFAULT NULL,
+   rght  integer DEFAULT NULL,
+   created   timestamp  DEFAULT NULL,
+   modified   timestamp  DEFAULT NULL
+);
 
---
--- Volcado de datos para la tabla `users`
---
 
-INSERT INTO `users` (`id`, `email`, `username`, `password`, `role`, `status`, `created`, `modified`) VALUES
-(1, 'admin@admin.com', 'admin', '$2y$10$.5BwWje6vLYfjsrELeNPzO2IGOXY.gFVEYax8n038kAhBhC0tGoYi', '1', 1, '2015-09-15 19:40:05', '2015-09-15 19:40:05');
 
+
+INSERT INTO  personas  ( nombres ,  apepaterno ,  apematerno ,  fecnacimiento ,  tbltipdocumento ,  numerodocumento ,  tblgenero ,  created ,  modified ) VALUES
+('administrador', 'del', 'sistema', '15-12-2016', 1, '23456723', 1, '05-12-2016', NULL);
+
+INSERT INTO  users  (  persona_id ,  email ,  username ,  password ,  passtoken ,  passtokenfecha ,  fotodir ,  foto ,  activo ,  eliminado ,  status ,  created ,  modified ) VALUES
+( 1, 'admin@admin.com', 'admin', '$2y$10$.5BwWje6vLYfjsrELeNPzO2IGOXY.gFVEYax8n038kAhBhC0tGoYi', NULL, NULL, 'b8d7708b-22dd-482a-8694-0481545c57b3', '20151129_154444.jpg', 'S', 'N', 1, '05-12-2016', '05-12-2016');
+
+INSERT INTO  tablas  (parent_id ,  tipo ,  valor ,  codigo ,  fecha ,  nombre ,  descripcion ,  lft ,  rght ,  created ,  modified ) VALUES
+(NULL, NULL, NULL, '', NULL, 'Tipos de documento', 'Tipos de documento de identidad Perú', 1, 10, '2016-05-12', NULL),
+(1, NULL, NULL, 'DNI', NULL, 'Documento Nacional de Identidad', '', 2, 3, '2016-05-12', NULL),
+(1, NULL, NULL, 'LE', NULL, 'Libreta Electoral', '', 4, 5, '2016-05-12', NULL),
+(1, NULL, NULL, 'LM', NULL, 'Libreta Militar', '', 6, 7, '2016-05-12', NULL),
+(1, NULL, NULL, 'PAS', NULL, 'Pasaporte', '', 8, 9, '2016-05-12', NULL),
+(NULL, NULL, NULL, NULL, NULL, 'Roles', 'Roles de usuario del Sistema', 11, 16, '2016-05-12', NULL),
+(6, NULL, NULL, 'admin', NULL, 'Administrador', 'Administrador del Sistema', 12, 13, '2016-05-12', NULL),
+(6, NULL, NULL, 'user', NULL, 'Usuario', 'Usuario comun del Sistema', 14, 15, '2016-05-12', NULL);

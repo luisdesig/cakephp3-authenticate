@@ -19,10 +19,14 @@ class TablasController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['ParentTablas']
+            'contain' => ['ParentTablas'],
+            'sortWhitelist' => ['id'],
+            'limit' => 5
         ];
+        
         $tablas = $this->paginate($this->Tablas);
 
+        $this->set('title', 'Lista de Tablas');
         $this->set(compact('tablas'));
         $this->set('_serialize', ['tablas']);
     }
@@ -40,6 +44,7 @@ class TablasController extends AppController
             'contain' => ['ParentTablas', 'Rolusers', 'ChildTablas']
         ]);
 
+        $this->set('title', 'Tabla');
         $this->set('tabla', $tabla);
         $this->set('_serialize', ['tabla']);
     }
@@ -62,6 +67,8 @@ class TablasController extends AppController
             }
         }
         $parentTablas = $this->Tablas->ParentTablas->find('list', ['limit' => 200]);
+         
+        $this->set('title', 'Agregar Nuevas Tablas');
         $this->set(compact('tabla', 'parentTablas'));
         $this->set('_serialize', ['tabla']);
     }
@@ -113,7 +120,6 @@ class TablasController extends AppController
     
     public function getRolesUsuario(){
         $roles = $this->Tablas->findByParentId(6);
-        
         return $roles;
     }
     

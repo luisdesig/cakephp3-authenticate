@@ -7,8 +7,8 @@ $this->Html->addCrumb('Registrar usuario', '', ['class'=>'active']);
     $('documento').ready(function(){
         $('#rolusers-tabla-id').select2({multiple:true });
     });
-    
 </script>
+
 <div class="col-md-offset-3 col-md-6">
     <div class="box box-primary">
         <div class="box-header with-border">

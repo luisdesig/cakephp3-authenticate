@@ -39,6 +39,7 @@ class Persona extends Entity
     protected function _getNombrecompleto()
     {
         return $this->_properties['nombres'] . '  ' .
-            $this->_properties['apeparterno']. ' '.$this->_properties['apematerno'];
+               $this->_properties['apeparterno']. ' '.
+               $this->_properties['apematerno'];
     }
 }

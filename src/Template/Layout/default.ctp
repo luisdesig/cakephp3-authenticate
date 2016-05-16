@@ -32,13 +32,14 @@ $cakeDescription = 'la Empresa | '.$title;
     <?= $this->Html->css('bootstrap.min.css') ?>
     <?= $this->Html->css('bootstrap-timepicker.min.css') ?>
     <?= $this->Html->css('select2.min.css') ?>
-    
-    
+    <?= $this->Html->css('datepicker3.css') ?>
     <?= $this->Html->css('font-awesome.min.css') ?>
     <!-- Ionicons -->
     <?= $this->Html->css('ionicons.min.css') ?>
-    <!-- Theme style -->
+    <?= $this->Html->css('iCheck/all.css') ?>
+    <?= $this->Html->css('blue.css') ?>
     
+    <!-- Theme style -->
     <?= $this->Html->css('AdminLTE-2.3.3.min.css') ?>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
@@ -51,6 +52,8 @@ $cakeDescription = 'la Empresa | '.$title;
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <?= $this->Html->css('main.css') ?>
     
 <?= $this->Html->script('jQuery-2.1.4.min.js') ?>
     <?= $this->fetch('meta') ?>
@@ -278,11 +281,14 @@ $cakeDescription = 'la Empresa | '.$title;
         <section class="content-header">
           <h1><?=$title?></h1>
             <?php 
-            $this->Html->addCrumb('Inicio', '/', ['class'=> 'fa fa-dashboard']);
-            echo $this->Html->getCrumbList();
+            echo $this->Html->getCrumbList([
+                    'firstClass' => 'fa fa-dashboard',
+                    'lastClass' => 'active',
+                    'class' => 'breadcrumb'
+                    ],
+                    'Inicio');
             ?>
         </section>
-
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -310,7 +316,16 @@ $cakeDescription = 'la Empresa | '.$title;
     <?= $this->Html->script('bootstrap.min.js') ?>
     <?= $this->Html->script('app.js') ?>
     <?= $this->Html->script('bootstrap-filestyle.min.js') ?>
+    <?= $this->Html->script('bootstrap-datepicker.js') ?>
+    
+    <?= $this->Html->script('jquery.inputmask.js') ?>
+    <?= $this->Html->script('jquery.inputmask.date.extensions.js') ?>
+    <?= $this->Html->script('jquery.inputmask.extensions.js') ?>
+    
     <?= $this->Html->script('select2.full.min.js') ?>
+    <?= $this->Html->script('icheck.min.js') ?>
+    
+    <?= $this->Html->script('main.js') ?>
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the
