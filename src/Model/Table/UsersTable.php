@@ -23,7 +23,7 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+  
         $this->table('users');
         $this->displayField('id');
         $this->primaryKey('id');
@@ -37,7 +37,16 @@ class UsersTable extends Table
         $this->hasMany('Rolusers', [
             'className' => 'Rolusers',
             'foreignKey' => 'user_id'
-            //'conditions' => ['Addresses.primary' => '1']
+        ]);
+        
+        $this->hasMany('Autores', [
+            'className' => 'Incidencias',
+            'foreignKey' => 'autor_id'
+        ]);
+        
+        $this->hasMany('Asignados', [
+            'className' => 'Incidencias',
+            'foreignKey' => 'asignado_id'
         ]);
         
         $this->addBehavior('Proffer.Proffer', [

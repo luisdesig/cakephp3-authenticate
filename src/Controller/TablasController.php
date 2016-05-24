@@ -10,6 +10,8 @@ use App\Controller\AppController;
  */
 class TablasController extends AppController
 {
+    
+    
 
     /**
      * Index method
@@ -19,10 +21,14 @@ class TablasController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['ParentTablas']
+            'contain' => ['ParentTablas'],
+            'sortWhitelist' => ['id'],
+            'limit' => 10
         ];
-        $tablas = $this->paginate($this->Tablas);
+        
+        $tablas = $this->paginate($this->Tablas->find('all')->where(['Tablas.parent_id is null']));
 
+        $this->set('title', 'Lista de Tablas');
         $this->set(compact('tablas'));
         $this->set('_serialize', ['tablas']);
     }
@@ -40,6 +46,7 @@ class TablasController extends AppController
             'contain' => ['ParentTablas', 'Rolusers', 'ChildTablas']
         ]);
 
+        $this->set('title', 'Tabla');
         $this->set('tabla', $tabla);
         $this->set('_serialize', ['tabla']);
     }
@@ -61,7 +68,14 @@ class TablasController extends AppController
                 $this->Flash->error(__('The tabla could not be saved. Please, try again.'));
             }
         }
-        $parentTablas = $this->Tablas->ParentTablas->find('list', ['limit' => 200]);
+        $parentTablas = $this->Tablas->ParentTablas->find('treeList', [
+            'recoverOrder' => ['nombre' => 'ASC'],
+            'limit' => 400,
+            'keyPath' => 'id',
+            'valuePath' => 'nombre'
+        ]);
+         
+        $this->set('title', 'Agregar Nuevas Tablas');
         $this->set(compact('tabla', 'parentTablas'));
         $this->set('_serialize', ['tabla']);
     }
@@ -87,7 +101,12 @@ class TablasController extends AppController
                 $this->Flash->error(__('The tabla could not be saved. Please, try again.'));
             }
         }
-        $parentTablas = $this->Tablas->ParentTablas->find('list', ['limit' => 200]);
+        $parentTablas = $this->Tablas->ParentTablas->find('treeList', [
+            'recoverOrder' => ['nombre' => 'ASC'],
+            'limit' => 400,
+            'keyPath' => 'id',
+            'valuePath' => 'nombre'
+        ]);
         $this->set(compact('tabla', 'parentTablas'));
         $this->set('_serialize', ['tabla']);
     }
@@ -103,18 +122,33 @@ class TablasController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $tabla = $this->Tablas->get($id);
-        if ($this->Tablas->delete($tabla)) {
+       /* if ($this->Tablas->delete($tabla)) {
             $this->Flash->success(__('The tabla has been deleted.'));
         } else {
             $this->Flash->error(__('The tabla could not be deleted. Please, try again.'));
-        }
+        }*/
         return $this->redirect(['action' => 'index']);
     }
+
     
-    public function getRolesUsuario(){
-        $roles = $this->Tablas->findByParentId(6);
+    public function getCodigoIncidencia(){
         
-        return $roles;
+        $tabla = $this->Tablas->get(32);
+        $cod = split('-',$tabla['codigo']);
+        if ($cod[0] != ''.date("Ym")){
+            $cod[0] = ''.date("Ym");
+            $cod[1] = '000001';
+        }else{
+            $cod[1] = substr(('000000'.($cod[1]+1)), -6);
+        }
+        $cod = ['codigo' => $cod[0].'-'.$cod[1]];
+
+        $tabla = $this->Tablas->patchEntity($tabla, $cod);
+        if ($this->Tablas->save($tabla)) {
+            $codigo = $tabla['codigo'];
+        }
+        return $codigo;
+        
     }
     
 }

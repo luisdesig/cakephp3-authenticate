@@ -121,7 +121,7 @@ class Initial extends AbstractMigration
             ])
             ->addColumn('valor', 'biginteger', [
                 'default' => null,
-                'limit' => 20,
+                //'limit' => 20,
                 'null' => true,
             ])
             ->addColumn('codigo', 'string', [

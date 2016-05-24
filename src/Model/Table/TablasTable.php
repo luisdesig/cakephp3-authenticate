@@ -39,11 +39,25 @@ class TablasTable extends Table
             'foreignKey' => 'parent_id'
         ]);
         $this->hasMany('Rolusers', [
-            'foreignKey' => 'tabla_id'
+            'foreignKey' => 'tblrolusuario'
         ]);
         $this->hasMany('ChildTablas', [
             'className' => 'Tablas',
             'foreignKey' => 'parent_id'
+        ]);
+        
+        $this->hasMany('Tipoincidencias', [
+            'className' => 'Incidencias',
+            'foreignKey' => 'tbltipoincidencia'
+        ]);
+        
+        $this->hasMany('Estadoincidencias', [
+            'className' => 'Incidencias',
+            'foreignKey' => 'tblestadoincidencia'
+        ]);
+        $this->hasMany('Indicenciausers', [
+            'className' => 'Indicenciausers',
+            'foreignKey' => 'tblrolincidencia'
         ]);
     }
 

@@ -16,6 +16,12 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Database\Type;
+
+use Cake\I18n\Time;
+Time::$defaultLocale = 'es-PE';
+Time::setToStringFormat('dd/MM/yyyy'); // este formato es para mostrar en las index
+Type::build('datetime')->useLocaleParser(false);
 
 /**
  * Application Controller
@@ -76,6 +82,11 @@ class AppController extends Controller
             ],
             'authError' => 'Proporsione sus credenciales para entraral sistema.'
         ]);
+    }
+    
+    public function parseFechaPostgresql($date = null){
+        $date = explode("/", $date)[2] .'-'. explode("/", $date)[0] .'-'. explode("/", $date)[1];
+        return Time::parse($date);
     }
 
     public function beforeFilter(Event $event)

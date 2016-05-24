@@ -9,11 +9,12 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $user_id
  * @property \App\Model\Entity\User $user
- * @property int $tabla_id
- * @property \App\Model\Entity\Tabla $tabla
+ * @property int $tbltipousuario
  * @property string $activo
+ * @property string $eliminado
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property \App\Model\Entity\Tabla $tabla
  */
 class Roluser extends Entity
 {

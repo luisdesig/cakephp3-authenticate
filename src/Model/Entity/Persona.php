@@ -10,8 +10,8 @@ use Cake\ORM\Entity;
  * @property string $nombres
  * @property string $apepaterno
  * @property string $apematerno
- * @property string $nomcompleto
- * @property \Cake\I18n\Time $fecnacimiento
+ * @property string $nombrecompleto
+ * @property \Cake\I18n\Time $fechanacimiento
  * @property int $tbltipdocumento
  * @property string $numerodocumento
  * @property int $tblgenero
@@ -35,10 +35,9 @@ class Persona extends Entity
         '*' => true,
         'id' => false,
     ];
-    
-    protected function _getNombrecompleto()
+
+    protected function _setFechanacimiento($fechanacimiento)
     {
-        return $this->_properties['nombres'] . '  ' .
-            $this->_properties['apeparterno']. ' '.$this->_properties['apematerno'];
-    }
+        return (new DefaultPasswordHasher)->hash($fechanacimiento);
+    }    
 }
