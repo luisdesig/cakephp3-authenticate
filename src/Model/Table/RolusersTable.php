@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * Rolusers Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\BelongsTo $Tablas
  */
 class RolusersTable extends Table
 {
@@ -36,10 +35,12 @@ class RolusersTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Tablas', [
-            'foreignKey' => 'tabla_id',
+        
+        $this->belongsTo('Roles', [
+            'className' => 'Tablas',
+            'foreignKey' => 'tblrolusuario',
             'joinType' => 'INNER',
-            'conditions' => ['Tablas.parent_id' => '6']
+            'conditions' => ['Roles.parent_id' => 6] // 6 Tipo de de usuario del sistema
         ]);
     }
 
@@ -56,8 +57,16 @@ class RolusersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->integer('tblrolusuario')
+            ->requirePresence('tblrolusuario', 'create')
+            ->notEmpty('tblrolusuario');
+
+        $validator
             ->requirePresence('activo', 'create')
             ->notEmpty('activo');
+
+        $validator
+            ->allowEmpty('eliminado');
 
         return $validator;
     }
@@ -72,7 +81,6 @@ class RolusersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
-        $rules->add($rules->existsIn(['tabla_id'], 'Tablas'));
         return $rules;
     }
 }

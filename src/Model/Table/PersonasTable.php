@@ -58,11 +58,11 @@ class PersonasTable extends Table
             ->notEmpty('apematerno');
 
         $validator
-            ->allowEmpty('nomcompleto');
+            ->allowEmpty('nombrecompleto');
 
         $validator
-            ->dateTime('fecnacimiento')
-            ->allowEmpty('fecnacimiento');
+            ->dateTime('fechanacimiento')
+            ->allowEmpty('fechanacimiento');
 
         $validator
             ->integer('tbltipdocumento')

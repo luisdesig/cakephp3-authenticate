@@ -13,7 +13,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,23 +24,25 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        <?php //$this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css('bootstrap.min.css') ?>
-    
+    <!--Awesome -->
     <?= $this->Html->css('font-awesome.min.css') ?>
     <!-- Ionicons -->
     <?= $this->Html->css('ionicons.min.css') ?>
-    <!-- Theme style -->
+    <?= $this->Html->css('iCheck/all.css') ?>
+    <?= $this->Html->css('blue.css') ?>
     
+    <!-- Theme style -->
     <?= $this->Html->css('AdminLTE-2.3.3.min') ?>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <?= $this->Html->css('blue.css') ?>
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -68,15 +70,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <!-- REQUIRED JS SCRIPTS -->
     <?= $this->Html->script('jQuery-2.1.4.min.js')?>
     <?= $this->Html->script('bootstrap.min.js') ?>
+    <?= $this->Html->script('app.js') ?>
     <?= $this->Html->script('icheck.min.js') ?>
-    <script>
-      $(function () {
-        $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
-        });
-      });
+    <?= $this->Html->script('main.js') ?>
+    
     </script>
 </body>
 </html>

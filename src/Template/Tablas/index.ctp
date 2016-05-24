@@ -1,15 +1,8 @@
 <div class="box">
     <div class="box-header">
       <h3 class="box-title">lista de Talas</h3>
-      <div class="box-tools">
-        <ul class="no-margin pull-right">
-            <?php
-                echo $this->Form->dropdownButton('Acciones', [
-                    '<li>'.$this->Html->link(__('Agregar'), ['action' => 'add']).'</li>'
-                    
-                ]);
-            ?>
-        </ul>
+      <div class="pull-right"> 
+            <?= $this->element('acciones',['acciones'=>$tablas, 'tipo'=>'0.1', 'objeto'=>'Tabla'])?>
       </div>
     </div>
     <div class="box-body no-padding">
@@ -23,8 +16,7 @@
             <th><?= $this->Paginator->sort('fecha') ?></th>
             <th><?= $this->Paginator->sort('nombre') ?></th>
             <th><?= $this->Paginator->sort('descripcion') ?></th>
-            <th><?= $this->Paginator->sort('created') ?></th>
-            <th><?= $this->Paginator->sort('modified') ?></th>
+            <th><?= $this->Paginator->sort('created') ?></th> 
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -39,11 +31,8 @@
                 <td><?= h($tabla->fecha) ?></td>
                 <td><?= h($tabla->nombre) ?></td>
                 <td><?= h($tabla->descripcion) ?></td>
-                <td><?= h($tabla->created) ?></td>
-                <td><?= h($tabla->modified) ?></td>
-                <td class="actions">
-                    <?=$this->element('accionved',['data'=>$tabla])?>
-                </td>
+                <td><?= h($tabla->created) ?></td> 
+                <td><?= $this->element('acciones',['acciones'=>$tabla, 'tipo'=>'0'])?></td>
             </tr>
             <?php endforeach; ?>
       </tbody>

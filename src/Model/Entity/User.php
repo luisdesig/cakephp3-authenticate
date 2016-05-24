@@ -35,5 +35,4 @@ class User extends Entity
     {
         return (new DefaultPasswordHasher)->hash($password);
     }
-    
 }
