@@ -7,6 +7,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 /**
  * Personas Model
  *
@@ -65,16 +67,29 @@ class PersonasTable extends Table
             ->allowEmpty('fechanacimiento');
 
         $validator
-            ->integer('tbltipdocumento')
-            ->allowEmpty('tbltipdocumento');
+            ->integer('prmtipdocumento')
+            ->allowEmpty('prmtipdocumento');
 
         $validator
             ->allowEmpty('numerodocumento');
 
         $validator
-            ->integer('tblgenero')
-            ->allowEmpty('tblgenero');
+            ->integer('prmgenero')
+            ->allowEmpty('prmgenero');
 
         return $validator;
+    }
+
+    
+    public function beforeSave(Event $event, Entity $entity, \ArrayObject $options){
+        $entity['nombrecompleto'] = $entity['nombres']
+                                    .' '.$entity['apepaterno']
+                                    .' '.$entity['apematerno'];
+        
+        if($entity->isNew()) {       
+            
+        } else {
+            
+        }
     }
 }

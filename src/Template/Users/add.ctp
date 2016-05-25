@@ -21,6 +21,9 @@
             </div>
             <div class="col-md-8">
                 <?php
+                    echo $this->Form->input('persona.nombrecompleto', ['type'=>'hidden']); 
+                    echo $this->Form->input('nombrecompleto', ['type'=>'hidden']);
+                    
                     echo $this->Form->input('persona.nombres', ['label'=>'Nombres', 'class'=>'form-control']);
                     echo $this->Form->input('persona.apepaterno', ['label'=>'Apellido Paterno', 'class'=>'form-control']);
                     echo $this->Form->input('persona.apematerno', ['label'=>'Apellido Materno', 'class'=>'form-control']);

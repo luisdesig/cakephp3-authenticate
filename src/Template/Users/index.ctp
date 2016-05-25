@@ -16,7 +16,7 @@
                             <th><?=$this->Paginator->sort('foto') ?></th>
                             <th><?=$this->Paginator->sort('email') ?></th>
                             <th><?=$this->Paginator->sort('role', ['label'=>'Rol']) ?></th>
-                            <th><?=$this->Paginator->sort('status', ['label'=>'Estado']) ?></th>
+                            <th><?=$this->Paginator->sort('status', ['label'=>'Activo']) ?></th>
                             <th><?=$this->Paginator->sort('created', ['label'=>'Creado']) ?></th>
                             <th><?=__( 'Acciones') ?>
                             </th>
@@ -28,8 +28,10 @@
                             <td><?=$this->Number->format($user->id) ?></td>
                             <td><?=$this->Html->image($user->fotodir.'ico_'.$user->foto) ?></td>
                             <td><?=h ($user->email) ?></td>
-                            <td><?=h ($user->role) ?></td>
-                            <td><?=$this->Number->format($user->status) ?></td>
+                            <td><?php foreach ($user->rolusers as $index => $rol) {
+                                echo ($index==0?$rol['role']['nombre']:', '.$rol['role']['nombre']);
+                            }?></td>
+                            <td><?=($this->Number->format($user->status)==1?__('Si'):__('No')) ?></td>
                             <td><?=h ($user->created) ?></td>
                             <td class="actions">
                                 <?=$this->element('acciones',['acciones'=>$user, 'tipo'=>0])?>

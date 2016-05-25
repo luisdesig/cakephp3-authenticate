@@ -7,6 +7,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 /**
  * Users Model
  *
@@ -128,4 +130,16 @@ class UsersTable extends Table
         return $rules;
     }
 
+    public function beforeSave(Event $event, Entity $entity, \ArrayObject $options){
+        $entity['nombrecompleto'] = $entity->persona['nombres']
+                                    .' '.$entity->persona['apepaterno']
+                                    .' '.$entity->persona['apematerno'];
+        $entity['username'] = $entity['email'];
+
+        if($entity->isNew()) {       
+            
+        } else {
+            
+        }
+    }
 }

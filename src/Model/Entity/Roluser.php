@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $user_id
  * @property \App\Model\Entity\User $user
- * @property int $tbltipousuario
+ * @property int $prmtipousuario
  * @property string $activo
  * @property string $eliminado
  * @property \Cake\I18n\Time $created
@@ -32,4 +32,5 @@ class Roluser extends Entity
         '*' => true,
         'id' => false,
     ];
+
 }

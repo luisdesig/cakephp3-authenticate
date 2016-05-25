@@ -38,7 +38,7 @@ class RolusersTable extends Table
         
         $this->belongsTo('Roles', [
             'className' => 'Parametros',
-            'foreignKey' => 'tblrolusuario',
+            'foreignKey' => 'prmrolusuario',
             'joinType' => 'INNER',
             'conditions' => ['Roles.parent_id' => 6] // 6 Tipo de de usuario del sistema
         ]);
@@ -57,9 +57,9 @@ class RolusersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('tblrolusuario')
-            ->requirePresence('tblrolusuario', 'create')
-            ->notEmpty('tblrolusuario');
+            ->integer('prmrolusuario')
+            ->requirePresence('prmrolusuario', 'create')
+            ->notEmpty('prmrolusuario');
 
         $validator
             ->requirePresence('activo', 'create')

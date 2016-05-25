@@ -12,9 +12,9 @@ use Cake\ORM\Entity;
  * @property string $apematerno
  * @property string $nombrecompleto
  * @property \Cake\I18n\Time $fechanacimiento
- * @property int $tbltipdocumento
+ * @property int $prmtipdocumento
  * @property string $numerodocumento
- * @property int $tblgenero
+ * @property int $prmgenero
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property \App\Model\Entity\User[] $users
@@ -35,9 +35,4 @@ class Persona extends Entity
         '*' => true,
         'id' => false,
     ];
-
-    protected function _setFechanacimiento($fechanacimiento)
-    {
-        return (new DefaultPasswordHasher)->hash($fechanacimiento);
-    }    
 }

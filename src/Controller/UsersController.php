@@ -3,11 +3,12 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use App\Controller\ParametrosController;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
 use Cake\Network\Email\Email;
 use Cake\Core\Configure;
+
+use App\Controller\ParametrosController;
 
 /**
  * Users Controller
@@ -60,7 +61,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->paginate = ['contain' => ['Personas', 'Rolusers'],
+        $this->paginate = ['contain' => ['Personas', 'Rolusers.Roles'],
             'conditions' => ['Users.eliminado'=>'N']];
         $users = $this->paginate($this->Users);
         foreach ($users as $id => $user) {
@@ -107,16 +108,17 @@ class UsersController extends AppController
 
             $roles=[];
             foreach ($data['rolusers'] as $rol){
-                $roles[] = ['tblrolusuario' => $rol,
-                            'activo' => 'S'];
+                $roles[] = ['prmrolusuario' => $rol,
+                            'activo' => 'S',
+                            'usercreate' => $this->Auth->User('id')];
             }
             $data['rolusers'] = $roles;
-            
-            $data['persona']['nombrecompleto'] = $data['persona']['nombres']
+
+          /*  $data['persona']['nombrecompleto'] = $data['persona']['nombres']
                                                   .' '.$data['persona']['apepaterno']
                                                   .' '.$data['persona']['apematerno'];
             $data['nombrecompleto'] = $data['persona']['nombrecompleto'];
-            $data['username'] = $data['email'];
+            $data['username'] = $data['email'];*/
             
             $user = $this->Users->patchEntity($user, $data);
 
@@ -160,8 +162,9 @@ class UsersController extends AppController
             $roles=[];
             if (isset($data['rolusers'])){
                 foreach ($data['rolusers'] as $rol){
-                    $roles[] = ['tblrolusuario' => $rol,
-                                'activo' => 'S'];
+                    $roles[] = ['prmrolusuario' => $rol,
+                                'activo' => 'S',
+                            'usercreate' => $this->Auth->User('id')];
                 }
             }
             
@@ -171,11 +174,11 @@ class UsersController extends AppController
 
             $data['rolusers'] = $roles;
             
-            $data['persona']['nombrecompleto'] = $data['persona']['nombres']
+           /* $data['persona']['nombrecompleto'] = $data['persona']['nombres']
                                                   .' '.$data['persona']['apepaterno']
                                                   .' '.$data['persona']['apematerno'];
             $data['nombrecompleto'] = $data['persona']['nombrecompleto'];
-            $data['username'] = $data['email'];
+            $data['username'] = $data['email'];*/
             $data['persona']['fechanacimiento'] = $this->parseFechaPostgresql($data['persona']['fechanacimiento']);
             
             $user = $this->Users->patchEntity($user, $data);
@@ -206,7 +209,7 @@ class UsersController extends AppController
         
         $rolesid='';
         foreach($user['rolusers'] as $rol){
-            $rolesid .= ($rolesid==''? $rol['tblrolusuario'] : ','.$rol['tblrolusuario']);
+            $rolesid .= ($rolesid==''? $rol['prmrolusuario'] : ','.$rol['prmrolusuario']);
         }
         
         $this->set(compact('user', 'rolesid'));
