@@ -1,20 +1,20 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Tabla;
+use App\Model\Entity\Parametros;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Tablas Model
+ * Parametros Model
  *
- * @property \Cake\ORM\Association\BelongsTo $ParentTablas
+ * @property \Cake\ORM\Association\BelongsTo $ParentParametros
  * @property \Cake\ORM\Association\HasMany $Rolusers
- * @property \Cake\ORM\Association\HasMany $ChildTablas
+ * @property \Cake\ORM\Association\HasMany $ChildParametros
  */
-class TablasTable extends Table
+class ParametrosTable extends Table
 {
 
     /**
@@ -27,38 +27,27 @@ class TablasTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('tablas');
+        $this->table('parametros');
         $this->displayField('id');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Tree');
 
-        $this->belongsTo('ParentTablas', [
-            'className' => 'Tablas',
+        $this->belongsTo('ParentParametros', [
+            'className' => 'Parametros',
             'foreignKey' => 'parent_id'
         ]);
+        
+        $this->hasMany('ChildParametros', [
+            'className' => 'Parametros',
+            'foreignKey' => 'parent_id'
+        ]);
+        
         $this->hasMany('Rolusers', [
-            'foreignKey' => 'tblrolusuario'
+            'foreignKey' => 'prmrolusuario'
         ]);
-        $this->hasMany('ChildTablas', [
-            'className' => 'Tablas',
-            'foreignKey' => 'parent_id'
-        ]);
-        
-        $this->hasMany('Tipoincidencias', [
-            'className' => 'Incidencias',
-            'foreignKey' => 'tbltipoincidencia'
-        ]);
-        
-        $this->hasMany('Estadoincidencias', [
-            'className' => 'Incidencias',
-            'foreignKey' => 'tblestadoincidencia'
-        ]);
-        $this->hasMany('Indicenciausers', [
-            'className' => 'Indicenciausers',
-            'foreignKey' => 'tblrolincidencia'
-        ]);
+
     }
 
     /**
@@ -113,7 +102,7 @@ class TablasTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentTablas'));
+        $rules->add($rules->existsIn(['parent_id'], 'ParentParametros'));
         return $rules;
     }
 }

@@ -38,17 +38,7 @@ class UsersTable extends Table
             'className' => 'Rolusers',
             'foreignKey' => 'user_id'
         ]);
-        
-        $this->hasMany('Autores', [
-            'className' => 'Incidencias',
-            'foreignKey' => 'autor_id'
-        ]);
-        
-        $this->hasMany('Asignados', [
-            'className' => 'Incidencias',
-            'foreignKey' => 'asignado_id'
-        ]);
-        
+
         $this->addBehavior('Proffer.Proffer', [
             'foto' => [    // The name of your upload field
                 'root' => WWW_ROOT . 'files', // Customise the root upload folder here, or omit to use the default

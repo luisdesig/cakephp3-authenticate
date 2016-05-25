@@ -4,13 +4,13 @@
         <div class="box-header with-border">
           <h3 class="box-title">Registrar configuraciones</h3>
             <div class="pull-right">
-                <?= $this->element('acciones',['acciones'=>$tabla, 'tipo'=>'3', 'objeto'=>'Tabla'])?>
+                <?= $this->element('acciones',['acciones'=>$parametro, 'tipo'=>'3', 'objeto'=>'Parametros'])?>
             </div>
         </div>
         <div class="box-body">
             <?php
-                echo $this->Form->create($tabla);
-                echo $this->Form->input('parent_id', ['label'=>'Depende del Parametros', 'options' => $parentTablas, 'empty' => true]);
+                echo $this->Form->create($parametro);
+                echo $this->Form->input('parent_id', ['label'=>'Depende del Parametros', 'options' => $parentParametros, 'empty' => ($parametro['parent_id']!=''?false:true)]);
                 echo $this->Form->input('nombre');
                 echo $this->Form->input('descripcion');
             ?>
@@ -21,7 +21,7 @@
                 <div class="col-md-3"><?php
                     echo $this->Form->input('fecha', 
                         ['type'=>'text',
-                        'value'=> ($tabla['fecha']==''?'':date("d/m/Y", strtotime($tabla['fecha']))),
+                        'value'=> ($parametro['fecha']==''?'':date("d/m/Y", strtotime($parametro['fecha']))),
                          'label'=>'Fecha', 
                          'class'=>'form-control datepicker',
                          'prepend' => $this->Icons->fa('calendar')
@@ -41,7 +41,7 @@
         </div>
         <div class="box-footer">
             <div class="pull-right">
-                <?= $this->element('acciones',['acciones'=>$tabla, 'tipo'=>'3', 'objeto'=>'Tabla'])?>
+                <?= $this->element('acciones',['acciones'=>$parametro, 'tipo'=>'3', 'objeto'=>'Parametros'])?>
             </div>
         </div>
     </div>

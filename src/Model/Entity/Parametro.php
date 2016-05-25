@@ -4,11 +4,11 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Tabla Entity.
+ * Parametros Entity.
  *
  * @property int $id
  * @property int $parent_id
- * @property \App\Model\Entity\ParentTabla $parent_tabla
+ * @property \App\Model\Entity\ParentParametros $parent_parametros
  * @property int $tipo
  * @property int $valor
  * @property string $codigo
@@ -20,9 +20,9 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property \App\Model\Entity\Roluser[] $rolusers
- * @property \App\Model\Entity\ChildTabla[] $child_tablas
+ * @property \App\Model\Entity\ChildParametros[] $child_parametross
  */
-class Tabla extends Entity
+class Parametro extends Entity
 {
 
     /**

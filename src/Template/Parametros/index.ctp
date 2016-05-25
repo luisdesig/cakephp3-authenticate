@@ -2,7 +2,7 @@
     <div class="box-header">
       <h3 class="box-title">lista de Talas</h3>
       <div class="pull-right"> 
-            <?= $this->element('acciones',['acciones'=>$tablas, 'tipo'=>'0.1', 'objeto'=>'Tabla'])?>
+            <?= $this->element('acciones',['acciones'=>$parametros, 'tipo'=>'0.1', 'objeto'=>'Parametros'])?>
       </div>
     </div>
     <div class="box-body no-padding">
@@ -21,18 +21,18 @@
         </tr>
     </thead>
      <tbody>
-         <?php foreach ($tablas as $index => $tabla): ?>
+         <?php foreach ($parametros as $index => $parametros): ?>
             <tr>
-                <td><?= $this->Number->format($tabla->id) ?></td>
-                <td><?= $tabla->has('parent_tabla') ? $this->Html->link($tabla->parent_tabla->id, ['controller' => 'Tablas', 'action' => 'view', $tabla->parent_tabla->id]) : '' ?></td>
-                <td><?= $this->Number->format($tabla->tipo) ?></td>
-                <td><?= $this->Number->format($tabla->valor) ?></td>
-                <td><?= h($tabla->codigo) ?></td>
-                <td><?= h($tabla->fecha) ?></td>
-                <td><?= h($tabla->nombre) ?></td>
-                <td><?= h($tabla->descripcion) ?></td>
-                <td><?= h($tabla->created) ?></td> 
-                <td><?= $this->element('acciones',['acciones'=>$tabla, 'tipo'=>'0'])?></td>
+                <td><?= $this->Number->format($parametros->id) ?></td>
+                <td><?= $parametros->has('parent_parametros') ? $this->Html->link($parametros->parent_parametros->id, ['controller' => 'Parametros', 'action' => 'view', $parametros->parent_parametros->id]) : '' ?></td>
+                <td><?= $this->Number->format($parametros->tipo) ?></td>
+                <td><?= $this->Number->format($parametros->valor) ?></td>
+                <td><?= h($parametros->codigo) ?></td>
+                <td><?= h($parametros->fecha) ?></td>
+                <td><?= h($parametros->nombre) ?></td>
+                <td><?= h($parametros->descripcion) ?></td>
+                <td><?= h($parametros->created) ?></td> 
+                <td><?= $this->element('acciones',['acciones'=>$parametros, 'tipo'=>'0'])?></td>
             </tr>
             <?php endforeach; ?>
       </tbody>

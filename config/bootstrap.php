@@ -65,6 +65,7 @@ use Cake\Utility\Security;
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
+    Configure::load('trujinet', 'default');
 } catch (\Exception $e) {
     die($e->getMessage() . "\n");
 }
@@ -81,28 +82,6 @@ if (!Configure::read('debug')) {
     Configure::write('Cache._cake_model_.duration', '+1 years');
     Configure::write('Cache._cake_core_.duration', '+1 years');
 }
-
-Configure::write('Company', [
-    'name' => 'Nombre Empresa',
-    'slogan' => 'SloganEmpresa',
-    'dir' => 'Pais, Lugar direccion de la empresa 987',
-    'telefonos' => [
-        'lima'=>'11111111',
-        'trujillo'=>'222222222',
-        'cusco'=>'33333333'
-        ],
-    'redes' => [
-        'facebook'=>'https://www.facebook.com/Trujinet/', 
-        'twitter'=>'http://www.twitter.com/trujinet',
-        'googleplus'=>'https://plus.google.com/b/102381180027572950010/'],
-    'emails' => [
-        'admin' => 'admin@tuempresa.com',
-        'support' => 'support@tuempresa.com',
-        'team' => 'teamempresa@tuempresa.com',
-        'redes' => 'redes@tuempresa.com',
-        'ventas' => 'ventas@tuempresa.com'
-        ]
-]);
 
 /**
  * Set server timezone to UTC. You can change it to another timezone of your

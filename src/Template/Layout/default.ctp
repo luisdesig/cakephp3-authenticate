@@ -260,9 +260,6 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
           <ul class="sidebar-menu">
             <li class="header"><?=__('MENÚ')?></li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="<?=($this->request->here=='/incidencias'?'active':'')?>">
-              <a href="/incidencias">
-                <?= $this->Icons->fa('file')?> <span>Incidencias</span></a></li>
             <li class="<?=($this->request->here=='/users'?'active':'')?>"><a href="/users"><?= $this->Icons->fa('user')?> <span>Usuarios</span></a></li>
           </ul><!-- /.sidebar-menu -->
 

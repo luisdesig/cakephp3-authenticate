@@ -37,7 +37,7 @@ class RolusersTable extends Table
         ]);
         
         $this->belongsTo('Roles', [
-            'className' => 'Tablas',
+            'className' => 'Parametros',
             'foreignKey' => 'tblrolusuario',
             'joinType' => 'INNER',
             'conditions' => ['Roles.parent_id' => 6] // 6 Tipo de de usuario del sistema

@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use App\Controller\TablasController;
+use App\Controller\ParametrosController;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
 use Cake\Network\Email\Email;

@@ -226,9 +226,9 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'nonstandard_posudo nano /etc/postgresql/9.3/main/pg_hba.confrt_number',
-            'username' => '',
-            'password' => '',
-            'database' => '',
+            'username' => 'postgres',
+            'password' => 'holaluis',
+            'database' => 'prueba',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,

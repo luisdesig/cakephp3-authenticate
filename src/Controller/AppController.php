@@ -17,6 +17,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Database\Type;
+use Cake\Core\Configure;
 
 use Cake\I18n\Time;
 Time::$defaultLocale = 'es-PE';
@@ -34,9 +35,13 @@ Type::build('datetime')->useLocaleParser(false);
 class AppController extends Controller
 {
     
-    static protected $activo = ['S'=>'Si','N'=>'No'];
-    static protected $eliminado = ['S'=>'Si','N'=>'No'];
-    
+    public $miVars = [
+        'title' => '',
+        'optActivo'=>['S'=>'Si','N'=>'No']
+        ,'optEliminado'=>['S'=>'Si','N'=>'No']
+        ,'breadcrumbs'=>[]
+    ];
+
     /**
      * Initialization hook method.
      *
@@ -85,15 +90,51 @@ class AppController extends Controller
     }
     
     public function parseFechaPostgresql($date = null){
-        $date = explode("/", $date)[2] .'-'. explode("/", $date)[0] .'-'. explode("/", $date)[1];
-        return Time::parse($date);
+        if ($date!=null and $date!=''){
+            $date = explode("/", $date)[2] .'-'. explode("/", $date)[1] .'-'. explode("/", $date)[0];
+            $date = new Time($date);
+        }
+        return $date;
+    }
+    
+    public function paraBreadCrumb(){
+        $Controller = $this->request->params['controller'];
+        $labelCrumb = $this->request->params['action'];
+        $this->miVars['breadcrumbs'][0]['label'] = $Controller;
+        
+        switch ($this->request->params['action']) {
+            case 'view':
+                $labelCrumb = __('Ver '.$Controller);
+                break;
+            case 'add':
+                $labelCrumb = __('Registrar '.$Controller);
+                break;
+            case 'edit':
+                $labelCrumb = __('Modificar '.$Controller);
+                break;
+            case 'index':
+                $labelCrumb = __('Lista de '.$Controller);
+                break;
+        }
+        
+        $this->miVars['title'] = $labelCrumb;
+        $this->miVars['breadcrumbs'][1]['label'] = $labelCrumb;
+        $this->miVars['breadcrumbs'][1]['url'] = '';
+        $this->miVars['breadcrumbs'][1]['class'] = 'active';
     }
 
     public function beforeFilter(Event $event)
     {
-        $this->set('usuarioLogueado', $this->Auth->user());
-        $this->set('activo', ['S'=>'Si','N'=>'No']);
-        $this->set('eliminado', ['S'=>'Si','N'=>'No']);
-    }
+        $this->paraBreadCrumb();
+        $this->miVars['breadcrumbs'][0]['crumb'] = $this->request->params['controller'];
+        $this->miVars['breadcrumbs'][0]['url'] = '/'.split('/', $this->request->here)[1];
+        
+        $this->miVars['breadcrumbs'][1]['crumb'] = $this->request->params['action'];
+        $this->miVars['breadcrumbs'][1]['url'] = $this->request->here;
 
+        $this->miVars['company'] = Configure::read('trujinet');
+
+        $this->set('usuarioLogueado', $this->Auth->user());
+        $this->set('miVars', $this->miVars);
+    }
 }

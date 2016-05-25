@@ -19,7 +19,7 @@ class RolusersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'Tablas']
+            'contain' => ['Users', 'Parametros']
         ];
         $rolusers = $this->paginate($this->Rolusers);
 
@@ -37,7 +37,7 @@ class RolusersController extends AppController
     public function view($id = null)
     {
         $roluser = $this->Rolusers->get($id, [
-            'contain' => ['Users', 'Tablas']
+            'contain' => ['Users', 'Parametros']
         ]);
 
         $this->set('roluser', $roluser);
@@ -62,8 +62,8 @@ class RolusersController extends AppController
             }
         }
         $users = $this->Rolusers->Users->find('list', ['limit' => 200]);
-        $tablas = $this->Rolusers->Tablas->find('list', ['limit' => 200]);
-        $this->set(compact('roluser', 'users', 'tablas'));
+        $parametross = $this->Rolusers->Parametros->find('list', ['limit' => 200]);
+        $this->set(compact('roluser', 'users', 'parametross'));
         $this->set('_serialize', ['roluser']);
     }
 
@@ -89,8 +89,8 @@ class RolusersController extends AppController
             }
         }
         $users = $this->Rolusers->Users->find('list', ['limit' => 200]);
-        $tablas = $this->Rolusers->Tablas->find('list', ['limit' => 200]);
-        $this->set(compact('roluser', 'users', 'tablas'));
+        $parametross = $this->Rolusers->Parametros->find('list', ['limit' => 200]);
+        $this->set(compact('roluser', 'users', 'parametross'));
         $this->set('_serialize', ['roluser']);
     }
 
