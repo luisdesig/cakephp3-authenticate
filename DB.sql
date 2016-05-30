@@ -8,9 +8,9 @@ CREATE TABLE  personas  (
    apematerno  character varying(100) NOT NULL,
    nombrecompleto character varying(300) NOT NULL,
    fechanacimiento   date  DEFAULT NULL,
-   prmtipodocumento  integer DEFAULT NULL,
+   tbltipdocumento  integer DEFAULT NULL,
    numerodocumento  character varying(20) DEFAULT NULL,
-   prmgenero  integer DEFAULT NULL,
+   tblgenero  integer DEFAULT NULL,
    created  timestamp  DEFAULT NULL,
    modified   timestamp  DEFAULT NULL
 );
@@ -36,7 +36,7 @@ CREATE TABLE users  (
 CREATE TABLE rolusers  (
    id  serial primary key,
    user_id  integer NOT NULL,
-   prmrolusuario  integer NOT NULL,
+   tblrolusuario  integer NOT NULL,
    activo  character varying(1) NOT NULL DEFAULT 'S',
    eliminado  character varying(1) DEFAULT 'N',
    created   timestamp  NOT NULL,
