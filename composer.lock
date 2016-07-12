@@ -128,16 +128,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.2.9",
+            "version": "3.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "b98b14de4fea83f20023143ab7712fcfda23da8e"
+                "reference": "c318328d981cad94e223ec95c79fd0a2e98679bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b98b14de4fea83f20023143ab7712fcfda23da8e",
-                "reference": "b98b14de4fea83f20023143ab7712fcfda23da8e",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c318328d981cad94e223ec95c79fd0a2e98679bc",
+                "reference": "c318328d981cad94e223ec95c79fd0a2e98679bc",
                 "shasum": ""
             },
             "require": {
@@ -196,20 +196,20 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-05-17 02:15:10"
+            "time": "2016-07-09 02:08:27"
         },
         {
             "name": "cakephp/chronos",
-            "version": "0.4.9",
+            "version": "0.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "b29a9b3cc8ae2f35d4ca9a32bc4bef001d6ee125"
+                "reference": "39db65d38488d6edd88bab5f33e19b1205ceeeda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/b29a9b3cc8ae2f35d4ca9a32bc4bef001d6ee125",
-                "reference": "b29a9b3cc8ae2f35d4ca9a32bc4bef001d6ee125",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/39db65d38488d6edd88bab5f33e19b1205ceeeda",
+                "reference": "39db65d38488d6edd88bab5f33e19b1205ceeeda",
                 "shasum": ""
             },
             "require": {
@@ -251,20 +251,20 @@
                 "datetime",
                 "time"
             ],
-            "time": "2016-04-16 18:14:39"
+            "time": "2016-06-15 06:26:37"
         },
         {
             "name": "cakephp/migrations",
-            "version": "1.6.1",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "0d96079a92e8a77858c8bf103feae3a93005f415"
+                "reference": "b683daebb6d0f0ea41546b14f8a9ea591cebedfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/0d96079a92e8a77858c8bf103feae3a93005f415",
-                "reference": "0d96079a92e8a77858c8bf103feae3a93005f415",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/b683daebb6d0f0ea41546b14f8a9ea591cebedfd",
+                "reference": "b683daebb6d0f0ea41546b14f8a9ea591cebedfd",
                 "shasum": ""
             },
             "require": {
@@ -301,7 +301,7 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2016-05-23 20:34:05"
+            "time": "2016-06-23 17:18:29"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -946,12 +946,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Holt59/cakephp3-bootstrap-helpers.git",
-                "reference": "514266d8845f3338c4dbceb4ff20c74b076115fe"
+                "reference": "cdb803a09ab6fd3d444bd442ef44e023deefc974"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Holt59/cakephp3-bootstrap-helpers/zipball/514266d8845f3338c4dbceb4ff20c74b076115fe",
-                "reference": "514266d8845f3338c4dbceb4ff20c74b076115fe",
+                "url": "https://api.github.com/repos/Holt59/cakephp3-bootstrap-helpers/zipball/cdb803a09ab6fd3d444bd442ef44e023deefc974",
+                "reference": "cdb803a09ab6fd3d444bd442ef44e023deefc974",
                 "shasum": ""
             },
             "require": {
@@ -979,7 +979,7 @@
                 "bootstrap",
                 "cakephp"
             ],
-            "time": "2016-04-23 21:52:39"
+            "time": "2016-07-12 13:55:30"
         },
         {
             "name": "imagine/imagine",
@@ -1256,16 +1256,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.0.6",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "24f155da1ff180df8e15e34a8f6e2f8a0eadefa8"
+                "reference": "bcf5aebabc95b56e370e13d78565f74c7d8726dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/24f155da1ff180df8e15e34a8f6e2f8a0eadefa8",
-                "reference": "24f155da1ff180df8e15e34a8f6e2f8a0eadefa8",
+                "url": "https://api.github.com/repos/symfony/config/zipball/bcf5aebabc95b56e370e13d78565f74c7d8726dc",
+                "reference": "bcf5aebabc95b56e370e13d78565f74c7d8726dc",
                 "shasum": ""
             },
             "require": {
@@ -1278,7 +1278,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -1305,20 +1305,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-20 18:53:54"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "symfony/console",
-            "version": "v3.0.6",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "34a214710e0714b6efcf40ba3cd1e31373a97820"
+                "reference": "747154aa69b0f83cd02fc9aa554836dee417631a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/34a214710e0714b6efcf40ba3cd1e31373a97820",
-                "reference": "34a214710e0714b6efcf40ba3cd1e31373a97820",
+                "url": "https://api.github.com/repos/symfony/console/zipball/747154aa69b0f83cd02fc9aa554836dee417631a",
+                "reference": "747154aa69b0f83cd02fc9aa554836dee417631a",
                 "shasum": ""
             },
             "require": {
@@ -1338,7 +1338,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -1365,20 +1365,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-28 09:48:42"
+            "time": "2016-06-29 07:02:31"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.0.6",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "74fec3511b62cb934b64bce1d96f06fffa4beafd"
+                "reference": "322da5f0910d8aa0b25fa65ffccaba68dbddb890"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/74fec3511b62cb934b64bce1d96f06fffa4beafd",
-                "reference": "74fec3511b62cb934b64bce1d96f06fffa4beafd",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/322da5f0910d8aa0b25fa65ffccaba68dbddb890",
+                "reference": "322da5f0910d8aa0b25fa65ffccaba68dbddb890",
                 "shasum": ""
             },
             "require": {
@@ -1387,7 +1387,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -1414,7 +1414,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-12 18:09:53"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1477,16 +1477,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.6",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "0047c8366744a16de7516622c5b7355336afae96"
+                "reference": "2884c26ce4c1d61aebf423a8b912950fe7c764de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/0047c8366744a16de7516622c5b7355336afae96",
-                "reference": "0047c8366744a16de7516622c5b7355336afae96",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/2884c26ce4c1d61aebf423a8b912950fe7c764de",
+                "reference": "2884c26ce4c1d61aebf423a8b912950fe7c764de",
                 "shasum": ""
             },
             "require": {
@@ -1495,7 +1495,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -1522,7 +1522,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-04 07:55:57"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "zendframework/zend-code",
@@ -1634,16 +1634,16 @@
     "packages-dev": [
         {
             "name": "cakephp/bake",
-            "version": "1.2.4",
+            "version": "1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "a98e988b154b30e20a5cfe917dcda5ae918bec85"
+                "reference": "876e074d2a936b0a2c825db06d81f3ea1d4b2af3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/a98e988b154b30e20a5cfe917dcda5ae918bec85",
-                "reference": "a98e988b154b30e20a5cfe917dcda5ae918bec85",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/876e074d2a936b0a2c825db06d81f3ea1d4b2af3",
+                "reference": "876e074d2a936b0a2c825db06d81f3ea1d4b2af3",
                 "shasum": ""
             },
             "require": {
@@ -1676,20 +1676,20 @@
                 "bake",
                 "cakephp"
             ],
-            "time": "2016-05-05 01:13:34"
+            "time": "2016-06-28 01:58:30"
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.2.8",
+            "version": "3.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "12e27bf2a3dc1814e765db8762c056e565c08d8a"
+                "reference": "5c351136576b05a386eb2bbb02267529123edf7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/12e27bf2a3dc1814e765db8762c056e565c08d8a",
-                "reference": "12e27bf2a3dc1814e765db8762c056e565c08d8a",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/5c351136576b05a386eb2bbb02267529123edf7b",
+                "reference": "5c351136576b05a386eb2bbb02267529123edf7b",
                 "shasum": ""
             },
             "require": {
@@ -1732,7 +1732,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2016-04-16 02:05:51"
+            "time": "2016-05-28 15:47:46"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2029,16 +2029,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.0.6",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "0e918c269093ba4c77fca14e9424fa74ed16f1a6"
+                "reference": "39492b8b8fe514163e677bf154fd80f6cc995759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/0e918c269093ba4c77fca14e9424fa74ed16f1a6",
-                "reference": "0e918c269093ba4c77fca14e9424fa74ed16f1a6",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/39492b8b8fe514163e677bf154fd80f6cc995759",
+                "reference": "39492b8b8fe514163e677bf154fd80f6cc995759",
                 "shasum": ""
             },
             "require": {
@@ -2054,7 +2054,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -2088,7 +2088,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-04-25 11:17:47"
+            "time": "2016-06-29 05:41:56"
         }
     ],
     "aliases": [],
