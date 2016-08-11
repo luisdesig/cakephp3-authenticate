@@ -32,6 +32,11 @@ class Initial extends AbstractMigration
                 'limit' => 100,
                 'null' => false,
             ])
+            ->addColumn('nombrecompleto', 'string', [
+                'default' => null,
+                'limit' => 300,
+                'null' => true,
+            ])
             ->addColumn('fecnacimiento', 'datetime', [
                 'default' => null,
                 'limit' => null,
@@ -78,7 +83,7 @@ class Initial extends AbstractMigration
                 'limit' => 11,
                 'null' => false,
             ])
-            ->addColumn('tabla_id', 'integer', [
+            ->addColumn('prmrolusuario', 'integer', [
                 'default' => null,
                 'limit' => 11,
                 'null' => false,
@@ -100,7 +105,7 @@ class Initial extends AbstractMigration
             ])
             ->create();
 
-        $table = $this->table('tablas');
+        $table = $this->table('parametros');
         $table
             ->addColumn('id', 'integer', [
                 'autoIncrement' => true,
@@ -243,16 +248,16 @@ class Initial extends AbstractMigration
             ])
             ->create();
             
-    $this->execute('INSERT INTO `personas` (`id`, `nombres`, `apepaterno`, `apematerno`, `fecnacimiento`, `tbltipdocumento`, `numerodocumento`, `tblgenero`, `created`, `modified`) VALUES(1, "administrador", "del", "sistema", "0000-00-00 00:00:00", 1, "23456723", 1, "2016-03-22 07:02:41", NULL)');
-    $this->execute('INSERT INTO `users` (`id`, `persona_id`, `email`, `username`, `password`, `passtoken`, `passtokenfecha`, `fotodir`, `foto`, `activo`, `eliminado`, `status`, `created`, `modified`) VALUES(1, 1, "admin@admin.com", "admin", "$2y$10$.5BwWje6vLYfjsrELeNPzO2IGOXY.gFVEYax8n038kAhBhC0tGoYi", NULL, NULL, "b8d7708b-22dd-482a-8694-0481545c57b3", "20151129_154444.jpg", "S", "N", 1, "2015-09-15 19:40:05", "2016-03-22 07:42:55")');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (1, NULL, NULL, NULL, "", NULL, "Tipos de documento", "Tipos de documento de identidad Perú", NULL, NULL, "2016-03-22 00:00:00", NULL)');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (2, 1, NULL, NULL, "DNI", NULL, "Documento Nacional de Identidad", "", NULL, NULL, "2016-03-22 00:00:00", NULL)');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (3, 1, NULL, NULL, "LE", NULL, "Libreta Electoral", "", NULL, NULL, "2016-03-22 00:00:00", NULL)');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (4, 1, NULL, NULL, "LM", NULL, "Libreta Militar", "", NULL, NULL, "2016-03-22 00:00:00", NULL)');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (5, 1, NULL, NULL, "PAS", NULL, "Pasaporte", "", NULL, NULL, "2016-03-22 00:00:00", NULL)');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (6, NULL, NULL, NULL, NULL, NULL, "Roles", "Roles de usuario del Sistema", NULL, NULL, "2016-03-22 00:00:00", NULL)');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (7, 6, NULL, NULL, "admin", NULL, "Administrador", "Administrador del Sistema", NULL, NULL, "2016-03-22 00:00:00", NULL)');
-    $this->execute('INSERT INTO `tablas` (`id`, `parent_id`, `tipo`, `valor`, `codigo`, `fecha`, `nombre`, `descripcion`, `lft`, `rght`, `created`, `modified`) VALUES (8, 6, NULL, NULL, "user", NULL, "Usuario", "Usuario comun del Sistema", NULL, NULL, "2016-03-22 00:00:00", NULL)');    
+    $this->execute('INSERT INTO personas (id, nombres, apepaterno, apematerno, fecnacimiento, tbltipdocumento, numerodocumento, tblgenero, created, modified) VALUES(1, \'administrador\', \'del\', \'sistema\', \'2016-03-22 00:00:00\', 1, \'23456723\', 1, \'2016-03-22 07:02:41\', NULL)');
+    $this->execute('INSERT INTO users (id, persona_id, email, username, password, passtoken, passtokenfecha, fotodir, foto, activo, eliminado, status, created, modified) VALUES(1, 1, \'admin@admin.com\', \'admin\', \'$2y$10$.5BwWje6vLYfjsrELeNPzO2IGOXY.gFVEYax8n038kAhBhC0tGoYi\', NULL, NULL, \'b8d7708b-22dd-482a-8694-0481545c57b3\', \'20151129_154444.jpg\', \'S\', \'N\', 1, \'2015-09-15 19:40:05\', \'2016-03-22 07:42:55\')');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (1, NULL, NULL, NULL, \'\', NULL, \'Tipos de documento\', \'Tipos de documento de identidad Perú\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (2, 1, NULL, NULL, \'DNI\', NULL, \'Documento Nacional de Identidad\', \'\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (3, 1, NULL, NULL, \'LE\', NULL, \'Libreta Electoral\', \'\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (4, 1, NULL, NULL, \'LM\', NULL, \'Libreta Militar\', \'\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (5, 1, NULL, NULL, \'PAS\', NULL, \'Pasaporte\', \'\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (6, NULL, NULL, NULL, NULL, NULL, \'Roles\', \'Roles de usuario del Sistema\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (7, 6, NULL, NULL, \'admin\', NULL, \'Administrador\', \'Administrador del Sistema\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');
+    $this->execute('INSERT INTO parametros (id, parent_id, tipo, valor, codigo, fecha, nombre, descripcion, lft, rght, created, modified) VALUES (8, 6, NULL, NULL, \'user\', NULL, \'Usuario\', \'Usuario comun del Sistema\', NULL, NULL, \'2016-03-22 00:00:00\', NULL)');    
 
     }
     
@@ -260,7 +265,7 @@ class Initial extends AbstractMigration
     {
         $this->dropTable('personas');
         $this->dropTable('rolusers');
-        $this->dropTable('tablas');
+        $this->dropTable('parametros');
         $this->dropTable('users');
     }
 }
