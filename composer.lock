@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "00015e32f3d1de3f159bc1578b726546",
+    "content-hash": "0b35242434ede1db623862c84d9f6eb2",
     "packages": [
         {
             "name": "aura/intl",
@@ -945,12 +945,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Holt59/cakephp3-bootstrap-helpers.git",
-                "reference": "ca0ebf8b18aa16ac6e64666d935475032f8c3dd6"
+                "reference": "4e69b5c6b2b0016f70c67ad56429c81f0ca920b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Holt59/cakephp3-bootstrap-helpers/zipball/ca0ebf8b18aa16ac6e64666d935475032f8c3dd6",
-                "reference": "ca0ebf8b18aa16ac6e64666d935475032f8c3dd6",
+                "url": "https://api.github.com/repos/Holt59/cakephp3-bootstrap-helpers/zipball/4e69b5c6b2b0016f70c67ad56429c81f0ca920b3",
+                "reference": "4e69b5c6b2b0016f70c67ad56429c81f0ca920b3",
                 "shasum": ""
             },
             "require": {
@@ -979,7 +979,7 @@
                 "bootstrap",
                 "cakephp"
             ],
-            "time": "2017-05-19 16:35:39"
+            "time": "2017-05-31 09:31:43"
         },
         {
             "name": "illuminate/cache",
@@ -3455,7 +3455,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9"
+        "php": ">=5.6"
     },
     "platform-dev": []
 }
