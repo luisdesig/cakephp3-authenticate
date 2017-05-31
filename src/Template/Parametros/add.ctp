@@ -1,8 +1,9 @@
  <?=$this->element('breadcrumb')?>
+ 
 <div class="col-md-offset-1 col-md-10">
     <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Registrar configuraciones</h3>
+          <h3 class="box-title"><?= $miVars['title']?></h3>
             <div class="pull-right">
                 <?= $this->element('acciones',['acciones'=>$parametro, 'tipo'=>'3', 'objeto'=>'Parametros'])?>
             </div>
@@ -10,19 +11,20 @@
         <div class="box-body">
             <?php
                 echo $this->Form->create($parametro);
-                echo $this->Form->input('parent_id', [
-                                            'class' => 's2',
-                                            'label'=>'Depende del Parámetro', 
-                                            'options' => $parentParametros, 
-                                            'empty' => ($parametro['parent_id']!=''?false:true)
-                                        ]);
-                echo $this->Form->input('nombre');
-                echo $this->Form->input('descripcion', ['label'=>'Descripción']);
+                echo $this->Form->input('parent_id', 
+                    [
+                        'label'=>'Depende del Parámetro', 
+                        'options' => $parentParametros, 
+                        'empty' => ($parametro['parent_id']!=''?false:true),
+                        'class' => 's2'
+                    ]);
+                echo $this->Form->input('nombre',['value'=>'']);
+                echo $this->Form->input('descripcion', ['label'=>'Descripción','value'=>'']);
             ?>
             <div class="row">
                 <div class="col-md-3"><?=$this->Form->input('tipo')?></div>
                 <div class="col-md-3"><?=$this->Form->input('valor')?></div>
-                <div class="col-md-3"><?=$this->Form->input('codigo', [])?></div>
+                <div class="col-md-3"><?=$this->Form->input('codigo', ['value'=>''])?></div>
                 <div class="col-md-3"><?php
                     echo $this->Form->input('fecha', 
                         ['type'=>'text',

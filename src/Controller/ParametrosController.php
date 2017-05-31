@@ -82,8 +82,6 @@ class ParametrosController extends AppController
             'keyPath' => 'id',
             'valuePath' => 'nombre'
         ]);
-        
-        $this->set('title', 'Agregar Nuevas Parametros');
         $this->set(compact('parametro', 'parentParametros'));
         $this->set('_serialize', ['parametro']);
     }

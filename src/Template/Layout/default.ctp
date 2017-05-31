@@ -281,7 +281,7 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
                     'lastClass' => 'active',
                     'class' => 'breadcrumb'
                     ],
-                    'Inicio');
+                    ' Inicio');
             ?>
         </section>
         <!-- Main content -->

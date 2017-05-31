@@ -98,7 +98,12 @@ class AppController extends Controller
         }
         return $date;
     }
-    
+
+    public function setTitle($titulo = null){
+        $this->miVars['title'] = $titulo;
+        return null;
+    }
+
     public function paraBreadCrumb(){
         $Controller = $this->request->params['controller'];
         $labelCrumb = $this->request->params['action'];
@@ -138,28 +143,29 @@ class AppController extends Controller
      * @param \Cake\Event\Event $event The beforeRender event.
      * @return \Cake\Network\Response|null|void
      */
-    public function beforeRender(Event $event)
-    {
-        if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
-        ) {
-            $this->set('_serialize', true);
-        }
+
+  public function beforeRender(Event $event)
+  {
+    if (!array_key_exists('_serialize', $this->viewVars) &&
+        in_array($this->response->type(), ['application/json', 'application/xml'])
+    ) {
+        $this->set('_serialize', true);
     }
+  }
 
   public function beforeFilter(Event $event)
-    {
-        $this->paraBreadCrumb();
-        $this->miVars['breadcrumbs'][0]['crumb'] = $this->request->params['controller'];
-        $this->miVars['breadcrumbs'][0]['url'] = '/'.explode('/', $this->request->here)[1];
-        
-        $this->miVars['breadcrumbs'][1]['crumb'] = $this->request->params['action'];
-        $this->miVars['breadcrumbs'][1]['url'] = $this->request->here;
+  {
+    $this->paraBreadCrumb();
+    $this->miVars['breadcrumbs'][0]['crumb'] = $this->request->params['controller'];
+    $this->miVars['breadcrumbs'][0]['url'] = '/'.explode('/', $this->request->here)[1];
+    
+    $this->miVars['breadcrumbs'][1]['crumb'] = $this->request->params['action'];
+    $this->miVars['breadcrumbs'][1]['url'] = $this->request->here;
 
-        $this->miVars['company'] = Configure::read('trujinet');
+    $this->miVars['company'] = Configure::read('trujinet');
 
-        $this->set('usuarioLogueado', $this->Auth->user());
-        $this->set('miVars', $this->miVars);
-    }
+    $this->set('usuarioLogueado', $this->Auth->user());
+    $this->set('miVars', $this->miVars);
+  }
 
 }

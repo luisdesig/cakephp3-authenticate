@@ -30,25 +30,24 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
 <?php
     echo $this->Html->css('../js/bower_components/bootstrap/dist/css/bootstrap.min');
     echo $this->Html->css('../js/bower_components/font-awesome/css/font-awesome.min');
-        echo $this->Html->css('../js/bower_components/iCheck/skins/all');
+    echo $this->Html->css('../js/bower_components/iCheck/skins/all');
 ?>
-    <!-- Ionicons -->
     <?= $this->Html->css('ionicons.min.css') ?>
     <?= $this->Html->css('blue.css') ?>
-    
     <!-- Theme style -->
-    <?= $this->Html->css('AdminLTE-2.3.3.min') ?>
+    <?= $this->Html->css('AdminLTE-2.3.3.min.css') ?>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    
+    <?= $this->Html->css('skin-blue.css') ?>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
     <?= $this->Html->css('main.css') ?>
     
 </head>
@@ -72,8 +71,10 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
 <?php
   echo $this->Html->script('bower_components/jquery/dist/jquery.min');
   echo $this->Html->script('bower_components/bootstrap/dist/js/bootstrap.min');
-  echo $this->Html->script('app.js');
   echo $this->Html->script('bower_components/iCheck/icheck.min');
+  
+  echo $this->Html->script('app.js');
+  echo $this->Html->script('log.js');
 ?>
 </body>
 </html>
