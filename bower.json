@@ -1,0 +1,28 @@
+{
+  "name": "trujinet.com",
+  "homepage": "https://github.com/luisdesig/cakephp3-authenticate",
+  "authors": [
+    "Luis Felipe Aguilar Pereda <luis.aguilarpereda@gmail.com>"
+  ],
+  "description": "plantilla",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "webroot/js/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7",
+    "bootstrap-filestyle": "^1.2.1",
+    "inputmask": "https://github.com/RobinHerbots/Inputmask.git#^3.3.6",
+    "select2": "https://github.com/select2/select2.git#^4.0.3",
+    "bootstrap-datepicker": "https://github.com/uxsolutions/bootstrap-datepicker.git#^1.6.4",
+    "iCheck": "https://github.com/fronteed/icheck.git#^1.0.2",
+    "font-awesome": "fontawesome#^4.7.0"
+  }
+}

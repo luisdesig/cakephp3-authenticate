@@ -10,14 +10,19 @@
         <div class="box-body">
             <?php
                 echo $this->Form->create($parametro);
-                echo $this->Form->input('parent_id', ['label'=>'Depende del Parametros', 'options' => $parentParametros, 'empty' => ($parametro['parent_id']!=''?false:true)]);
+                echo $this->Form->input('parent_id', [
+                                            'class' => 's2',
+                                            'label'=>'Depende del Parámetro', 
+                                            'options' => $parentParametros, 
+                                            'empty' => ($parametro['parent_id']!=''?false:true)
+                                        ]);
                 echo $this->Form->input('nombre');
-                echo $this->Form->input('descripcion');
+                echo $this->Form->input('descripcion', ['label'=>'Descripción']);
             ?>
             <div class="row">
                 <div class="col-md-3"><?=$this->Form->input('tipo')?></div>
                 <div class="col-md-3"><?=$this->Form->input('valor')?></div>
-                <div class="col-md-3"><?=$this->Form->input('codigo')?></div>
+                <div class="col-md-3"><?=$this->Form->input('codigo', [])?></div>
                 <div class="col-md-3"><?php
                     echo $this->Form->input('fecha', 
                         ['type'=>'text',
@@ -27,7 +32,10 @@
                          'prepend' => $this->Icons->fa('calendar')
                          ]);
                 ?></div>
-            </div> 
+            </div>
+            <div class="row">
+                <div class="col-md-12"><?=$this->Form->input('data',['label'=>'Datos'])?></div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="btn-group">

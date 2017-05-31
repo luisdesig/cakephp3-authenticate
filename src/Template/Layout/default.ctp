@@ -25,19 +25,20 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
         <?= $cakeDescription ?>
         <?php // echo $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon') ?>
+<?php 
+    echo $this->Html->meta('icon');
 
+    echo $this->Html->css('../js/bower_components/bootstrap/dist/css/bootstrap.min');
+    echo $this->Html->css('../js/bower_components/select2/dist/css/select2.min');
+    echo $this->Html->css('../js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min');
+    echo $this->Html->css('../js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min');
+    echo $this->Html->css('../js/bower_components/font-awesome/css/font-awesome.min');
+    echo $this->Html->css('../js/bower_components/iCheck/skins/all');
 
-    <?= $this->Html->css('bootstrap.min.css') ?>
-    <?= $this->Html->css('bootstrap-timepicker.min.css') ?>
-    <?= $this->Html->css('select2.min.css') ?>
-    <?= $this->Html->css('datepicker3.css') ?>
-    <?= $this->Html->css('font-awesome.min.css') ?>
+?>
     <!-- Ionicons -->
     <?= $this->Html->css('ionicons.min.css') ?>
-    <?= $this->Html->css('iCheck/all.css') ?>
     <?= $this->Html->css('blue.css') ?>
-    
     <!-- Theme style -->
     <?= $this->Html->css('AdminLTE-2.3.3.min.css') ?>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -54,7 +55,8 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
     
     <?= $this->Html->css('main.css') ?>
     
-<?= $this->Html->script('jQuery-2.1.4.min.js') ?>
+<?= $this->Html->script('bower_components/jquery/dist/jquery.min') ?>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -305,23 +307,20 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
 
     <!-- REQUIRED JS SCRIPTS -->
 
-    
-    <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->script('app.js') ?>
-    <?= $this->Html->script('bootstrap-filestyle.min.js') ?>
-    <?= $this->Html->script('bootstrap-datepicker.js') ?>
-    
-    <?= $this->Html->script('jquery.inputmask.js') ?>
-    <?= $this->Html->script('jquery.inputmask.date.extensions.js') ?>
-    <?= $this->Html->script('jquery.inputmask.extensions.js') ?>
-    
-    <?= $this->Html->script('select2.full.min.js') ?>
-    <?= $this->Html->script('icheck.min.js') ?>
-    
-    <?= $this->Html->script('main.js') ?>
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-         Both of these plugins are recommended to enhance the
-         user experience. Slimscroll is required when using the
-         fixed layout. -->
+<?php 
+  echo $this->Html->script('bower_components/bootstrap/dist/js/bootstrap.min');
+  echo $this->Html->script('bower_components/bootstrap-filestyle/src/bootstrap-filestyle.min');
+  echo $this->Html->script('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker');
+  echo $this->Html->script('bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min');
+  echo $this->Html->script('bower_components/inputmask/dist/inputmask/jquery.inputmask');
+  echo $this->Html->script('bower_components/inputmask/dist/inputmask/inputmask');    
+  echo $this->Html->script('bower_components/inputmask/dist/inputmask/inputmask.date.extensions');
+  echo $this->Html->script('bower_components/inputmask/dist/inputmask/inputmask.extensions');
+  echo $this->Html->script('bower_components/select2/dist/js/select2.min');    
+  echo $this->Html->script('bower_components/iCheck/icheck.min');
+
+  echo $this->Html->script('app');
+  echo $this->Html->script('main.js');
+  ?>
 </body>
 </html>

@@ -27,13 +27,13 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
         <?php //$this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
-
-    <?= $this->Html->css('bootstrap.min.css') ?>
-    <!--Awesome -->
-    <?= $this->Html->css('font-awesome.min.css') ?>
+<?php
+    echo $this->Html->css('../js/bower_components/bootstrap/dist/css/bootstrap.min');
+    echo $this->Html->css('../js/bower_components/font-awesome/css/font-awesome.min');
+        echo $this->Html->css('../js/bower_components/iCheck/skins/all');
+?>
     <!-- Ionicons -->
     <?= $this->Html->css('ionicons.min.css') ?>
-    <?= $this->Html->css('iCheck/all.css') ?>
     <?= $this->Html->css('blue.css') ?>
     
     <!-- Theme style -->
@@ -68,12 +68,12 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
     </div>
 
     <!-- REQUIRED JS SCRIPTS -->
-    <?= $this->Html->script('jQuery-2.1.4.min.js')?>
-    <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->script('app.js') ?>
-    <?= $this->Html->script('icheck.min.js') ?>
-    <?= $this->Html->script('main.js') ?>
     
-    </script>
+<?php
+  echo $this->Html->script('bower_components/jquery/dist/jquery.min');
+  echo $this->Html->script('bower_components/bootstrap/dist/js/bootstrap.min');
+  echo $this->Html->script('app.js');
+  echo $this->Html->script('bower_components/iCheck/icheck.min');
+?>
 </body>
 </html>

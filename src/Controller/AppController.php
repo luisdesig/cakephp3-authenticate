@@ -47,6 +47,8 @@ class AppController extends Controller
      *
      * Use this method to add common initialization code like loading components.
      *
+     * e.g. `$this->loadComponent('Security');`
+     *
      * @return void
      */
      public $helpers = [
@@ -59,8 +61,8 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-        
 
+        $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             'loginRedirect' => [
@@ -122,12 +124,34 @@ class AppController extends Controller
         $this->miVars['breadcrumbs'][1]['url'] = '';
         $this->miVars['breadcrumbs'][1]['class'] = 'active';
     }
+        /*
+         * Enable the following components for recommended CakePHP security settings.
+         * see http://book.cakephp.org/3.0/en/controllers/components/security.html
+         */
+        //$this->loadComponent('Security');
+        //$this->loadComponent('Csrf');
+    
 
-    public function beforeFilter(Event $event)
+    /**
+     * Before render callback.
+     *
+     * @param \Cake\Event\Event $event The beforeRender event.
+     * @return \Cake\Network\Response|null|void
+     */
+    public function beforeRender(Event $event)
+    {
+        if (!array_key_exists('_serialize', $this->viewVars) &&
+            in_array($this->response->type(), ['application/json', 'application/xml'])
+        ) {
+            $this->set('_serialize', true);
+        }
+    }
+
+  public function beforeFilter(Event $event)
     {
         $this->paraBreadCrumb();
         $this->miVars['breadcrumbs'][0]['crumb'] = $this->request->params['controller'];
-        $this->miVars['breadcrumbs'][0]['url'] = '/'.split('/', $this->request->here)[1];
+        $this->miVars['breadcrumbs'][0]['url'] = '/'.explode('/', $this->request->here)[1];
         
         $this->miVars['breadcrumbs'][1]['crumb'] = $this->request->params['action'];
         $this->miVars['breadcrumbs'][1]['url'] = $this->request->here;
@@ -137,4 +161,5 @@ class AppController extends Controller
         $this->set('usuarioLogueado', $this->Auth->user());
         $this->set('miVars', $this->miVars);
     }
+
 }

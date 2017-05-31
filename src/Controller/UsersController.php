@@ -101,6 +101,8 @@ class UsersController extends AppController
      * @return void Redirects on successful add, renders view otherwise.
      */
     public function add(){
+        debug($this->request);
+        exit();
         $this->aliasBreadcrumb = 'Agregar Usuario';
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {

@@ -12,7 +12,8 @@ $(document).ready(function() {
       radioClass: 'iradio_minimal-blue'
     });
     
-    $('.select2').select2({multiple:true });
+    $('.s2').select2({multiple:false});
+    $('.s2Multiple').select2({multiple:true});
 
 });
  
