@@ -30,6 +30,46 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: accesos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE accesos (
+    id integer NOT NULL,
+    prmsujeto integer,
+    prmtiposujeto integer,
+    prmrecurso integer,
+    prmtiporecurso integer,
+    activo character varying(1) DEFAULT 'S'::character varying,
+    data text,
+    created date,
+    modified date
+);
+
+
+ALTER TABLE public.accesos OWNER TO postgres;
+
+--
+-- Name: accesos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE accesos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accesos_id_seq OWNER TO postgres;
+
+--
+-- Name: accesos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE accesos_id_seq OWNED BY accesos.id;
+
+
+--
 -- Name: parametros; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -204,6 +244,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY accesos ALTER COLUMN id SET DEFAULT nextval('accesos_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY parametros ALTER COLUMN id SET DEFAULT nextval('parametros_id_seq'::regclass);
 
 
@@ -229,13 +276,21 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
+-- Name: accesos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY accesos
+    ADD CONSTRAINT accesos_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: parametros_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY parametros
     ADD CONSTRAINT parametros_pkey PRIMARY KEY (id);
 
-ALTER TABLE ONLY accesos ADD CONSTRAINT accesos_pkey PRIMARY KEY (id);
+
 --
 -- Name: personas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
