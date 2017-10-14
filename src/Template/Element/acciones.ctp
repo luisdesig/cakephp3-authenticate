@@ -42,5 +42,6 @@ switch ($tipo) {
         ,['class'=>'btn btn-primary' 
         ]);
         break;
+
 }
 echo $resultado;

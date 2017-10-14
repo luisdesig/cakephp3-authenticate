@@ -14,7 +14,7 @@ if (!$resetExito):?>
     </div>
     <?=$this->Form->input('token',['type'=>'hidden', 'value'=>$token])?>
     <div class="row text-center">
-<?= $this->Form->button(__('Invieme las información a mi correo'), ['class'=>'btn btn-primary submit', 'id' => 'submit'])?>
+<?= $this->Form->button(__('Cambiar mi Contraseña'), ['class'=>'btn btn-primary submit', 'id' => 'submit'])?>
     </div>
 <?= $this->Form->end(); 
 else:?>

@@ -10,7 +10,7 @@
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="row text-center">
-    <?= $this->Form->button(__('Invieme las información a mi correo'), ['class'=>'btn btn-primary submit', 'id' => 'submit'])?>
+    <?= $this->Form->button(__('Invieme la información a mi correo'), ['class'=>'btn btn-primary submit', 'id' => 'submit'])?>
         </div>
     <?= $this->Form->end(); ?>
 <?php else :?>

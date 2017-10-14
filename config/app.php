@@ -181,11 +181,22 @@ return [
         'default' => [
             'className' => 'Mail',
             // The following keys are used in SMTP transports
+            'host' => '',
+            'port' => 0,
+            'timeout' => 0,
+            'username' => '',
+            'password' => '',
+            'client' => null,
+            'tls' => true,
+            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+        ],
+        'gmail'=> [
+            'className' => 'Smtp',
             'host' => 'ssl://smtp.gmail.com',
             'port' => 465,
             'timeout' => 30,
-            'username' => 'sucorreo@gmail.com',
-            'password' => 'supass@',
+            'username' => 'admgestiones631@gmail.com',
+            'password' => 'PruebaPrueba',
             'client' => null,
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
@@ -204,9 +215,12 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
-            //'charset' => 'utf-8',
-            //'headerCharset' => 'utf-8',
+            'from' => 'admgestiones631@gmail.com',
+            'charset' => 'utf-8',
+            'headerCharset' => 'utf-8',
+        ],
+        'soporteTecnico' => [
+            'transport' => 'gmail'
         ],
     ],
 
@@ -238,7 +252,7 @@ return [
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,
-           // 'init' => ['SET datestyle TO ISO, DMY '],
+            //'init' => ['SET datestyle TO "ISO, DMY"'],
 
             /**
              * Set identifier quoting to true if you are using reserved words or

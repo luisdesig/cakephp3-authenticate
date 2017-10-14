@@ -17,14 +17,14 @@
                             <th><?=$this->Paginator->sort('email') ?></th>
                             <th><?=$this->Paginator->sort('role', ['label'=>'Rol']) ?></th>
                             <th><?=$this->Paginator->sort('status', ['label'=>'Activo']) ?></th>
-                            <th><?=$this->Paginator->sort('created', ['label'=>'Creado']) ?></th>
+                            <th><?=$this->Paginator->sort('created', ['label'=>'Desde']) ?></th>
                             <th><?=__( 'Acciones') ?>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($users as $user): ?>
-                        <tr>
+                        <tr class="<?php echo ($user->activo =='N'? 'info' : ($user->eliminado=='S' ? 'danger' : '')) ; ?>" >
                             <td><?=$this->Number->format($user->id) ?></td>
                             <td><?=$this->Html->image($user->fotodir.'ico_'.$user->foto) ?></td>
                             <td><?=h ($user->email) ?></td>
@@ -34,7 +34,15 @@
                             <td><?=($this->Number->format($user->status)==1?__('Si'):__('No')) ?></td>
                             <td><?=h ($user->created) ?></td>
                             <td class="actions">
-                                <?=$this->element('acciones',['acciones'=>$user, 'tipo'=>0])?>
+                                <?php
+                                if ($user->activo =='N'){
+                                    echo $this->Form->button(__('Activar Usuario'), ['type' => 'button', 'class'=>'btn btn-success', 'onclick'=>'activarusuario('.$user->id.')']);
+                                }elseif ($user->eliminado=='S') {
+                                    echo $this->Form->button(__('Resuperar Usuario'), ['type' => 'button', 'class'=>'btn btn-success', 'onclick'=>'recuperarusuario('.$user->id.')']);
+                                }else{
+                                    echo $this->element('acciones',['acciones'=>$user, 'tipo'=>0]);
+                                }
+                                ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -47,3 +55,9 @@
         </div>
     </div>
 </div>
+
+<?php
+  echo $this->Html->script(
+    ['app/users'], 
+    ['block' => true]);
+?>

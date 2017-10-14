@@ -16,7 +16,6 @@
             <th><?= $this->Paginator->sort('fecha') ?></th>
             <th><?= $this->Paginator->sort('nombre') ?></th>
             <th><?= $this->Paginator->sort('descripcion') ?></th>
-            <th><?= $this->Paginator->sort('created') ?></th> 
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -31,7 +30,6 @@
                 <td><?= h($parametros->fecha) ?></td>
                 <td><?= h($parametros->nombre) ?></td>
                 <td><?= h($parametros->descripcion) ?></td>
-                <td><?= h($parametros->created) ?></td> 
                 <td><?= $this->element('acciones',['acciones'=>$parametros, 'tipo'=>'0'])?></td>
             </tr>
             <?php endforeach; ?>

@@ -13,7 +13,7 @@
         "doctrine/migrations": "^1.4",
         "davidyell/proffer": "~0.6",
         "holt59/cakephp3-bootstrap-helpers": "dev-master",
-        "intervention/imagecache": "^2.3"
+        "intervention/imagecache":  "2.3.*"
     },
     "require-dev": {
         "psy/psysh": "@stable",

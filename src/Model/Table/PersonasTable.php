@@ -85,8 +85,8 @@ class PersonasTable extends Table
         $entity['nombrecompleto'] = $entity['nombres']
                                     .' '.$entity['apepaterno']
                                     .' '.$entity['apematerno'];
-        
-        if($entity->isNew()) {       
+
+        if($entity->isNew()) {
             
         } else {
             

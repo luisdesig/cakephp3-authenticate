@@ -235,7 +235,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 ALTER TABLE ONLY parametros
     ADD CONSTRAINT parametros_pkey PRIMARY KEY (id);
 
-
+ALTER TABLE ONLY accesos ADD CONSTRAINT accesos_pkey PRIMARY KEY (id);
 --
 -- Name: personas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --

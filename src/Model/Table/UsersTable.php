@@ -27,7 +27,7 @@ class UsersTable extends Table
         parent::initialize($config);
   
         $this->table('users');
-        $this->displayField('id');
+        $this->displayField('email');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
 
@@ -131,11 +131,16 @@ class UsersTable extends Table
     }
 
     public function beforeSave(Event $event, Entity $entity, \ArrayObject $options){
-        $entity['nombrecompleto'] = $entity->persona['nombres']
-                                    .' '.$entity->persona['apepaterno']
-                                    .' '.$entity->persona['apematerno'];
+        
+        if ($entity->persona['nombres'] != null and
+            $entity->persona['apepaterno'] != null and
+            $entity->persona['apematerno'] != null ){
+                $entity['nombrecompleto'] = $entity->persona['nombres']
+                                            .' '.$entity->persona['apepaterno']
+                                            .' '.$entity->persona['apematerno'];   
+            }
         $entity['username'] = $entity['email'];
-
+        
         if($entity->isNew()) {       
             
         } else {

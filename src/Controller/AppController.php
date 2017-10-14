@@ -34,115 +34,116 @@ Type::build('datetime')->useLocaleParser(false);
  */
 class AppController extends Controller
 {
-    
-    public $miVars = [
-        'title' => '',
-        'optActivo'=>['S'=>'Si','N'=>'No']
-        ,'optEliminado'=>['S'=>'Si','N'=>'No']
-        ,'breadcrumbs'=>[]
-    ];
+  public $miVars = [
+      'title' => '',
+      'optActivo'=>['S'=>'Si','N'=>'No']
+      ,'optEliminado'=>['S'=>'Si','N'=>'No']
+      ,'breadcrumbs'=>[]
+  ];
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
-     public $helpers = [
-        'Html' => ['className' => 'Bootstrap.BootstrapHtml'],
-        'Form' => ['className' => 'Bootstrap.BootstrapForm'],
-        'Paginator' => ['className' => 'Bootstrap.BootstrapPaginator'],
-        'Modal' => ['className' => 'Bootstrap.BootstrapModal']
-    ];
+  /**
+   * Initialization hook method.
+   *
+   * Use this method to add common initialization code like loading components.
+   *
+   * e.g. `$this->loadComponent('Security');`
+   *
+   * @return void
+   */
+   public $helpers = [
+      'Html' => ['className' => 'Bootstrap.BootstrapHtml'],
+      'Form' => ['className' => 'Bootstrap.BootstrapForm'],
+      'Paginator' => ['className' => 'Bootstrap.BootstrapPaginator'],
+      'Modal' => ['className' => 'Bootstrap.BootstrapModal']
+  ];
 
-    public function initialize()
-    {
-        parent::initialize();
+  public function initialize()
+  {
+      parent::initialize();
 
-        $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
-        $this->loadComponent('Auth', [
-            'loginRedirect' => [
-                'controller' => 'Users',
-                'action' => 'index'
-            ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'authenticate' => [
-                'Form' => [
-                    'userModel' => 'Users',
-                    'fields' => array(
-                        'username' => 'email',
-                        'password' => 'password'
-                    ),
-                    'scope' => array('status' => 1)
-                ]
-            ],
-            'authError' => 'Proporsione sus credenciales para entraral sistema.'
-        ]);
-    }
-    
-    public function parseFechaPostgresql($date = null){
-        if ($date!=null and $date!=''){
-            $date = explode("/", $date)[2] .'-'. explode("/", $date)[1] .'-'. explode("/", $date)[0];
-            $date = new Time($date);
-        }
-        return $date;
-    }
+      $this->loadComponent('RequestHandler');
+      $this->loadComponent('Flash');
+      $this->loadComponent('Auth', [
+          'loginRedirect' => [
+              'controller' => 'Users',
+              'action' => 'index'
+          ],
+          'logoutRedirect' => [
+              'controller' => 'Users',
+              'action' => 'login'
+          ],
+          'loginAction' => [
+              'controller' => 'Users',
+              'action' => 'login'
+          ],
+          'authenticate' => [
+              'Form' => [
+                  'userModel' => 'Users',
+                  'fields' => array(
+                      'username' => 'email',
+                      'password' => 'password'
+                  ),
+                  'scope' => array('status' => 1)
+              ]
+          ],
+          'authError' => 'Proporsione sus credenciales para entraral sistema.'
+      ]);
+  }
+  
+  public function parseFechaPostgresql($date = null){
+      if ($date!=null and $date!=''){
+          $date = explode("/", $date)[2] .'-'. explode("/", $date)[1] .'-'. explode("/", $date)[0];
+          $date = new Time($date);
+      }
+      return $date;
+  }
 
-    public function setTitle($titulo = null){
-        $this->miVars['title'] = $titulo;
-        return null;
-    }
+  public function setTitle($titulo = null){
+      $this->miVars['title'] = $titulo;
+      return null;
+  }
 
-    public function paraBreadCrumb(){
-        $Controller = $this->request->params['controller'];
-        $labelCrumb = $this->request->params['action'];
-        $this->miVars['breadcrumbs'][0]['label'] = $Controller;
-        
-        switch ($this->request->params['action']) {
-            case 'view':
-                $labelCrumb = __('Ver '.$Controller);
-                break;
-            case 'add':
-                $labelCrumb = __('Registrar '.$Controller);
-                break;
-            case 'edit':
-                $labelCrumb = __('Modificar '.$Controller);
-                break;
-            case 'index':
-                $labelCrumb = __('Lista de '.$Controller);
-                break;
-        }
-        
-        $this->miVars['title'] = $labelCrumb;
-        $this->miVars['breadcrumbs'][1]['label'] = $labelCrumb;
-        $this->miVars['breadcrumbs'][1]['url'] = '';
-        $this->miVars['breadcrumbs'][1]['class'] = 'active';
-    }
-        /*
-         * Enable the following components for recommended CakePHP security settings.
-         * see http://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
-    
+  public function paraBreadCrumb(){
+      $Controller = $this->request->params['controller'];
+      $labelCrumb = $this->request->params['action'];
+      $this->miVars['breadcrumbs'][0]['label'] = $Controller;
+      
+      switch ($this->request->params['action']) {
+          case 'view':
+              $labelCrumb = __('Ver '.$Controller);
+              break;
+          case 'add':
+              $labelCrumb = __('Registrar '.$Controller);
+              break;
+          case 'edit':
+              $labelCrumb = __('Modificar '.$Controller);
+              break;
+          case 'index':
+              $labelCrumb = __('Lista de '.$Controller);
+              break;
+          case 'index':
+              $labelCrumb = __('Gestión de '.$Controller);
+              break;
+      }
+      $this->miVars['title'] = $labelCrumb;
+      $this->miVars['breadcrumbs'][1]['label'] = $labelCrumb;
+      $this->miVars['breadcrumbs'][1]['url'] = '';
+      $this->miVars['breadcrumbs'][1]['class'] = 'active';
+  }
+  /*
+  * Enable the following components for recommended CakePHP security settings.
+  * see http://book.cakephp.org/3.0/en/controllers/components/security.html
+  */
+  //$this->loadComponent('Security');
+  //$this->loadComponent('Csrf');
+  
 
-    /**
-     * Before render callback.
-     *
-     * @param \Cake\Event\Event $event The beforeRender event.
-     * @return \Cake\Network\Response|null|void
-     */
+  /**
+  * Before render callback.
+  *
+  * @param \Cake\Event\Event $event The beforeRender event.
+  * @return \Cake\Network\Response|null|void
+  */
 
   public function beforeRender(Event $event)
   {
@@ -166,6 +167,31 @@ class AppController extends Controller
 
     $this->set('usuarioLogueado', $this->Auth->user());
     $this->set('miVars', $this->miVars);
+  }
+  
+  public function esAdmin($rolusers=[]){
+    $esAdmin = false;
+    foreach ($rolusers as $index=>$data) {
+      if ($index == 7){
+        $esAdmin = true;
+        break;
+      }
+    }
+    return $esAdmin;
+  }
+  
+  public function returnData($datos =null) {
+    if ($this->request->is('ajax')) {
+      $this->autoRender = false;
+      $this->viewBuilder()->layout('ajax');
+      $result = $this->mensaje;
+      $result['data']  = (($datos==null) ? []: $datos);
+      echo json_encode($result['data']);
+      die();
+    }
+    else {
+      return $datos;
+    }
   }
 
 }

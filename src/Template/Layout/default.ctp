@@ -27,14 +27,18 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
     </title>
 <?php 
     echo $this->Html->meta('icon');
-
-    echo $this->Html->css('../js/bower_components/bootstrap/dist/css/bootstrap.min');
-    echo $this->Html->css('../js/bower_components/select2/dist/css/select2.min');
-    echo $this->Html->css('../js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min');
-    echo $this->Html->css('../js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min');
-    echo $this->Html->css('../js/bower_components/font-awesome/css/font-awesome.min');
-    echo $this->Html->css('../js/bower_components/iCheck/skins/all');
-
+    echo $this->Html->css(
+      [
+        '../js/bower_components/bootstrap/dist/css/bootstrap.min',
+        '../js/bower_components/select2/dist/css/select2.min',
+        '../js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min',
+        '../js/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min',
+        '../js/bower_components/font-awesome/css/font-awesome.min',
+        '../js/bower_components/iCheck/skins/all',
+        '../js/bower_components/jquery.fancytree/dist/skin-bootstrap/ui.fancytree.min',
+        'main'
+      ]
+    );
 ?>
     <!-- Ionicons -->
     <?= $this->Html->css('ionicons.min.css') ?>
@@ -52,17 +56,18 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    <?= $this->Html->css('main.css') ?>
-    
-<?= $this->Html->script('bower_components/jquery/dist/jquery.min') ?>
-
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    <?php 
+      echo $this->Html->css('main.css');
+      echo $this->fetch('meta');
+      echo $this->fetch('css');
+    ?>
 </head>
   <body class="hold-transition skin-blue sidebar-mini">
-
+    <div id="ajaxCargando" class="modal fade" data-backdrop="static" data-keyboard="false"
+    	tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;">
+    	<div class="loader" style="margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;"></div>
+    </div>
+    
     <div class="wrapper">
       <header class="main-header">
         <!-- Logo -->
@@ -276,19 +281,21 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
         <section class="content-header">
           <h1><?=$miVars['title']?></h1>
             <?php 
-            echo $this->Html->getCrumbList([
+              echo $this->Html->getCrumbList([
                     'firstClass' => 'fa fa-dashboard',
                     'lastClass' => 'active',
                     'class' => 'breadcrumb'
                     ],
-                    ' Inicio');
+                    'Inicio');
             ?>
         </section>
         <!-- Main content -->
         <section class="content">
           <div class="row">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>  
+            <div class="col-md-12">
+              <?= $this->Flash->render() ?>
+              <?= $this->fetch('content') ?>
+            </div>
           </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -302,25 +309,39 @@ $cakeDescription = $miVars['company']['name'].' :: '.$miVars['title'];
         <!-- Default to the left -->
         <strong>Copyright &copy; 2015 <?=$this->Html->link($miVars['company']['name'], '/')?>.</strong> All rights reserved.
       </footer>
-        <div class="control-sidebar-bg"></div>
+      <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
     <!-- REQUIRED JS SCRIPTS -->
 
 <?php 
-  echo $this->Html->script('bower_components/bootstrap/dist/js/bootstrap.min');
-  echo $this->Html->script('bower_components/bootstrap-filestyle/src/bootstrap-filestyle.min');
-  echo $this->Html->script('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker');
-  echo $this->Html->script('bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min');
-  echo $this->Html->script('bower_components/inputmask/dist/inputmask/jquery.inputmask');
-  echo $this->Html->script('bower_components/inputmask/dist/inputmask/inputmask');    
-  echo $this->Html->script('bower_components/inputmask/dist/inputmask/inputmask.date.extensions');
-  echo $this->Html->script('bower_components/inputmask/dist/inputmask/inputmask.extensions');
-  echo $this->Html->script('bower_components/select2/dist/js/select2.min');    
-  echo $this->Html->script('bower_components/iCheck/icheck.min');
+  echo $this->Html->script(
+    [
+      'bower_components/jquery/dist/jquery.min',
 
-  echo $this->Html->script('app');
-  echo $this->Html->script('main.js');
-  ?>
+      'bower_components/jquery-ui/jquery-ui.min',
+      'bower_components/jquery-ui/ui/effects/effect-drop',
+      'bower_components/jquery-ui/ui/effects/effect-slide',
+      'bower_components/jquery-ui/ui/effects/effect-fade',
+
+      'bower_components/bootstrap/dist/js/bootstrap.min',
+      'bower_components/bootstrap-filestyle/src/bootstrap-filestyle.min',
+      'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker',
+      'bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min',
+      'bower_components/inputmask/dist/inputmask/jquery.inputmask',
+      'bower_components/inputmask/dist/inputmask/inputmask',
+      'bower_components/inputmask/dist/inputmask/inputmask.date.extensions',
+      'bower_components/inputmask/dist/inputmask/inputmask.extensions',
+      'bower_components/select2/dist/js/select2.min',
+      'bower_components/iCheck/icheck.min',
+      'bower_components/bootbox.js/bootbox',
+      'bower_components/remarkable-bootstrap-notify/bootstrap-notify.min',
+      'app',
+      'main'
+      ]
+    );
+  echo $this->fetch('script');
+  
+?>
 </body>
 </html>

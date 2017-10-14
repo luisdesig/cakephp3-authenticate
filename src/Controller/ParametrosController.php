@@ -75,13 +75,8 @@ class ParametrosController extends AppController
             $parametro['parent_id'] = $this->request->query['parent_id'];
         }
         
-        $parentParametros = $this->Parametros->ParentParametros->find('treeList', [
-            'recoverOrder' => ['nombre' => 'ASC'],
-            'conditions' => $parentFilter,
-            'limit' => 400,
-            'keyPath' => 'id',
-            'valuePath' => 'nombre'
-        ]);
+        $parentParametros = $this->getParametros();
+        
         $this->set(compact('parametro', 'parentParametros'));
         $this->set('_serialize', ['parametro']);
     }
@@ -98,23 +93,24 @@ class ParametrosController extends AppController
         $parametro = $this->Parametros->get($id, [
             'contain' => []
         ]);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $parametro = $this->Parametros->patchEntity($parametro, $this->request->data);
-            if ($this->Parametros->save($parametro)) {
-                $this->Flash->success(__('The parametro has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The parametro could not be saved. Please, try again.'));
-            }
+          $data = $this->request->data;
+          $data['fecha'] = $this->parseFechaPostgresql($data['fecha']);
+          $parametro = $this->Parametros->patchEntity($parametro, $data);
+
+          if ($this->Parametros->save($parametro)) {
+            $this->Flash->success(__('The parametro has been saved.'));
+            return $this->redirect(['action' => 'index']);
+          } else {
+            $this->Flash->error(__('The parametro could not be saved. Please, try again.'));
+          }
         }
-        $parentParametros = $this->Parametros->ParentParametros->find('treeList', [
-            'recoverOrder' => ['nombre' => 'ASC'],
-            'limit' => 400,
-            'keyPath' => 'id',
-            'valuePath' => 'nombre'
-        ]);
-        $this->set(compact('parametro', 'parentParametros'));
-        $this->set('_serialize', ['parametro']);
+        $parentParametros = $this->getParametros('threaded');
+
+        $this->set(compact('parametro', ['parametro']));
+        $this->set(compact('parentParametros', ['parentParametros']));
+        $this->set('_serialize', ['parametro', 'parentParametros']);
     }
 
     /**
@@ -136,7 +132,6 @@ class ParametrosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    
     public function getCodigoIncidencia(){
         
         $parametro = $this->Parametros->get(32);
@@ -154,7 +149,130 @@ class ParametrosController extends AppController
             $codigo = $parametro['codigo'];
         }
         return $codigo;
-        
     }
     
+    public function getParametros($tipo ='treeList'){
+      if ($this->request->is('ajax')){
+        $tipo = $this->request->query['tipo'];
+      }
+      $parentParametros = $this->Parametros->ParentParametros->find($tipo, [
+            'recoverOrder' => ['nombre' => 'ASC'],
+            'limit' => 400,
+            'keyPath' => 'id',
+            'valuePath' => 'nombre'
+        ])->toArray();
+        
+        $parentParametros = $this->generaTreeData($parentParametros);
+
+      if ($this->request->is('ajax')){
+        $this->autoRender = false;
+        $this->viewBuilder()->layout('ajax');
+        echo json_encode(['data'=>$parentParametros]);
+      }else{
+        return $parentParametros;
+      }
+    }
+
+  public function generaTreeData($data = []){
+    $result = [];
+    foreach ($data as $index=>$value) {
+      $result[$index] = 
+        [
+          'title' => $value['nombre'],
+          'key' => $value['id']
+        ];
+        
+      if (count($value['children'])>0){
+        $result[$index]['folder'] = true;
+        $result[$index]['children'] = $this->generaTreeData ($value['children']);
+      }
+    }
+    return $result;
+  }
+  
+  public function reubicarParametro(){
+    if ($this->request->is('post')) {
+    
+      $id = $this->request->data['id'];
+      $parent_id = $this->request->data['parent_id'];
+
+      $parametro = $this->Parametros->get($id);
+      if (!isset($parametro)) {
+         throw new NotFoundException(__('No existe el parametro que desea reubicar'));
+      }
+      if ($parent_id >= 0) {
+        $parent_id = ($parent_id ==0 ? null : $parent_id);
+        $parametro->parent_id = $parent_id;
+        $this->Parametros->save($parametro);
+        $this->Flash->success(__('Se guardo exitosamente'));
+      } else {
+        $this->Flash->success(__('Proporsione un número correcto para la reubicación'));
+      }
+    }
+    if ($this->request->is('ajax')){
+      $this->autoRender = false;
+      $this->viewBuilder()->layout('ajax');
+      echo json_encode([]);
+    }
+  }
+  
+  public function filtrarParametros($filtro =''){
+    if ($this->request->is('ajax')){
+      $filtro = $this->request->query['filtro'];
+    }
+
+    $parentParametros = $this->Parametros->ParentParametros->find('threaded', [
+          'recoverOrder' => ['nombre' => 'ASC'],
+          'limit' => 400,
+          'keyPath' => 'id',
+          'valuePath' => 'nombre'
+      ])->where([
+        'upper(nombre) like upper(\'%'.$filtro.'%\')'
+        ])->toArray();
+        
+    foreach ($parentParametros as $i=>$par) {
+      if (isset($par['parent_id'])){
+        $padre = $this->buscarPadre($par['parent_id']);
+        $padre['children'][]=$par;
+        $parentParametros[$i] = $padre;
+      }
+    }
+
+    $parentParametros = $this->generaTreeData($parentParametros);
+
+    if ($this->request->is('ajax')){
+      $this->autoRender = false;
+      $this->viewBuilder()->layout('ajax');
+      echo json_encode(['data'=>$parentParametros]);
+    }else{
+      return $parentParametros;
+    }
+  }
+  
+  function buscarPadre($id = null){
+    $padre = null;
+    $parametro = $this->Parametros->get($id, ['contain' => []])->toArray();
+
+    if (isset($parametro['parent_id'])){
+        $padre = $this->buscarPadre($par['parent_id']);
+    }
+    
+    if ($padre !== null){
+      $padre['children'][] = $parametro;
+      $parametro = $padre;
+    }
+
+    return $parametro;
+  }
+  
+  public function mnt($id = null){
+    
+    parent::setTitle('Gestión de Parametros' );
+    
+    //debug(parent::miVars['title']);
+    
+    echo json_encode([]);
+  }
+      
+  
 }

@@ -61,38 +61,28 @@ class ParametrosTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
-
         $validator
             ->integer('tipo')
             ->allowEmpty('tipo');
-
         $validator
             ->allowEmpty('valor');
-
         $validator
             ->allowEmpty('codigo');
-
         $validator
             ->dateTime('fecha')
             ->allowEmpty('fecha');
-
         $validator
             ->allowEmpty('nombre');
-
         $validator
             ->allowEmpty('descripcion');
-
         $validator
             ->integer('lft')
             ->allowEmpty('lft');
-
         $validator
             ->integer('rght')
             ->allowEmpty('rght');
-
         return $validator;
     }
-
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.

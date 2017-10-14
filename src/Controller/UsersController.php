@@ -37,6 +37,7 @@ class UsersController extends AppController
                     $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
                     $persona = $this->Users->Personas->get($user['persona_id']);
                     $user['persona'] = $persona->toArray();
+                    $user['rolusers'] = $this->Users->Rolusers->find('all', ['conditions'=> ['id'=>$user['id']]])->toArray();
                     $this->Auth->setUser($user);
                     return $this->redirect($this->Auth->redirectUrl());
                 }
@@ -62,7 +63,8 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = ['contain' => ['Personas', 'Rolusers.Roles'],
-            'conditions' => ['Users.eliminado'=>'N']];
+            //'conditions' => ['Users.eliminado'=>'N']
+            ];
         $users = $this->paginate($this->Users);
         foreach ($users as $id => $user) {
             $user['fotodir'] = '../files/users/foto/' . $user['fotodir'].'/';
@@ -101,9 +103,11 @@ class UsersController extends AppController
      * @return void Redirects on successful add, renders view otherwise.
      */
     public function add(){
-        debug($this->request);
-        exit();
-        $this->aliasBreadcrumb = 'Agregar Usuario';
+        $this->aliasBreadcrumb = 'Agregar Usuario'; 
+        /**
+         * TODO:
+         * */
+        
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $data = $this->request->data;
@@ -116,11 +120,11 @@ class UsersController extends AppController
             }
             $data['rolusers'] = $roles;
 
-          /*  $data['persona']['nombrecompleto'] = $data['persona']['nombres']
+            $data['persona']['nombrecompleto'] = $data['persona']['nombres']
                                                   .' '.$data['persona']['apepaterno']
                                                   .' '.$data['persona']['apematerno'];
             $data['nombrecompleto'] = $data['persona']['nombrecompleto'];
-            $data['username'] = $data['email'];*/
+            $data['username'] = $data['email'];
             
             $user = $this->Users->patchEntity($user, $data);
 
@@ -132,13 +136,19 @@ class UsersController extends AppController
             }
         }
         
-        $this->set('listaRoles', $this->Users->Rolusers->Roles->find('list', [
+        $listaRoles = $this->Users->Rolusers->Roles->find('list', [
                 'limit' => 200, 
                 'keyField' => 'id', 
                 'valueField' => 'nombre'
-            ])->order(['nombre ASC'])
-        );
+            ])->order(['nombre ASC'])->toArray();
         
+        $roles = $this->Auth->user('rolusers');
+        
+        if (!$this->esAdmin($listaRoles)){
+            unset($listaRoles[7]); // si no es administrador le quita la opcion de asignar administrado a otro usuario
+        }
+        
+        $this->set('listaRoles', $listaRoles);
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
         $this->set('title', __( 'Registrar nuevo Usuario'));
@@ -176,13 +186,14 @@ class UsersController extends AppController
 
             $data['rolusers'] = $roles;
             
-           /* $data['persona']['nombrecompleto'] = $data['persona']['nombres']
+            $data['persona']['nombrecompleto'] = $data['persona']['nombres']
                                                   .' '.$data['persona']['apepaterno']
                                                   .' '.$data['persona']['apematerno'];
             $data['nombrecompleto'] = $data['persona']['nombrecompleto'];
-            $data['username'] = $data['email'];*/
+            $data['username'] = $data['email'];
+            debug($data['persona']['fechanacimiento']);
             $data['persona']['fechanacimiento'] = $this->parseFechaPostgresql($data['persona']['fechanacimiento']);
-            
+            debug($data['persona']['fechanacimiento']);
             $user = $this->Users->patchEntity($user, $data);
 
             if ($this->Users->save($user)) {
@@ -214,6 +225,8 @@ class UsersController extends AppController
             $rolesid .= ($rolesid==''? $rol['prmrolusuario'] : ','.$rol['prmrolusuario']);
         }
         
+        
+        
         $this->set(compact('user', 'rolesid'));
         $this->set('_serialize', ['user']);
         $this->set('title', __('Actualizar datos del usuario'));
@@ -227,9 +240,12 @@ class UsersController extends AppController
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function delete($id = null){
+        $id = ($id == null ?  $this->request ['data']['id']: $id);
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+        $user['activo'] ='N';
         $user['eliminado'] ='S';
+        $user['status'] ='0';
         if ($this->Users->save($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
@@ -238,24 +254,56 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
+    public function activarusuario($id = null){
+        $id = ($id == null ?  $this->request ['data']['id']: $id);
+        $this->request->allowMethod(['post']);
+        $user = $this->Users->get($id);
+        $user['activo'] ='S';
+        $user['status'] ='1';
+        if ($this->Users->save($user)) {
+            $this->Flash->success(__('Usuario activado con exito.'));
+        } else {
+            $this->Flash->error(__('No se pudo activar al usuario. Intentelo nuevamente.'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+    
+    public function recuperarusuario($id = null){
+        $id = ($id == null ?  $this->request ['data']['id']: $id);
+        $this->request->allowMethod(['post']);
+        $user = $this->Users->get($id);
+        $user['activo'] ='S';
+        $user['eliminado'] ='N';
+        $user['status'] ='1';
+        if ($this->Users->save($user)) {
+            $this->Flash->success(__('Usuario recuperado con exito.'));
+        } else {
+            $this->Flash->error(__('No se pudo recuperar al usuario. Intentelo nuevamente.'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+    
     public function recuperarpass() {
         $user = $this->Users->newEntity();
         $envioCorreo = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->find('all')->where(['username'=>$this->request->data['username']])->first();
+            $emailUser= $this->request->data['username'];
+            $user = $this->Users->find('all')->where(['username'=>$emailUser])->first();
             if (empty($user)) {
                 $this->Flash->error(__('Lo sentimos pero no tenemos un usuario con los datos indicados'));
             }else{
                 $token = date("Y-m-d G:i:s"); ;
                 
                 $user['passtoken'] = (new DefaultPasswordHasher)->hash($token);
+                $user['passtoken'] = preg_replace("/[^a-zA-Z0-9]+/", "", $user['passtoken']);
                 $user['passtokenfecha'] = $token;
                 
-                $this->log('listo para enviar correo','debug');
+                $this->log('listo para enviar correo::'.$emailUser,'debug');
                 if ($this->Users->save($user)){
                     $persona = $this->Users->Personas->get($user['persona_id']);
 
                     $data = ['empresa'=>Configure::read('Company')];
+                    $data['email'] = $emailUser;
                     $data['token']= $user['passtoken'];
                     $data['titulo'] = Configure::read('Company')['name'].':: Dirección para Reseteo de Password';
                     $data['persona'] = [
@@ -290,9 +338,9 @@ class UsersController extends AppController
             }else{
                  $this->log('Las contraseñas coinciden','debug');
                 if ($this->request->data && $this->request->data['token']){
-                    $this->log('setiene clave token','debug');
+                    $this->log('se tiene clave token','debug');
                     $user = $this->Users->newEntity();
-                    $user = $this->Users->find('all')->where(['passtoken'=>$this->request->data['token']])->first();
+                    $user = $this->Users->find('all')->where(['Users.passtoken'=>$this->request->data['token']])->first();
                     if($user){
                         $this->log('encontro el token en la base de datos','debug');
                         $fechaToken = new Time($user['passtokenfecha']->format('Y-m-d H:i:s'));
@@ -303,7 +351,6 @@ class UsersController extends AppController
                             $this->log('la clave token esta vigente','debug');
                             $user['password'] = $this->request->data['nuevo-pass'];
                             $user['passtoken']= '';
-                            $user['passtokenfecha'] = '';
                             
                             if ($this->Users->save($user)){
                                  $this->Flash->success(__('Su contraseña se cambio con exito.'));
@@ -334,20 +381,25 @@ class UsersController extends AppController
      */
     
     private function __emailResetPass($data){
+        $nombre = $data['persona']['nombres'].' '
+            .$data['persona']['apepaterno']
+            .$data['persona']['apematerno'];
+        
         $this->log('inicio envio emai Reset Password','debug');
          /*enviando el correo*/
         $correo = new Email(); //instancia de correo
-        $correo
-          ->transport('default') //nombre del configTrasnport que acabamos de configurar
-          ->template('resetpassword') //plantilla a utilizar
-          ->emailFormat('html') //formato de correo
-          ->to('para@gmail.com') //correo para
-          ->from('de@gmail.com') //correo de
-          ->subject((($data['titulo']==null || $data['titulo']=='')?'Dirección para Reseteo de Password':$data['titulo'])) //asunto
-          ->viewVars(['data'=> $data])
-          ;
-
-        return $correo->send();
+        try{
+            $titulo = (($data['titulo']==null || $data['titulo']=='')?'Dirección para Reseteo de Password':$data['titulo']);
+            $correo->transport('gmail');
+            $correo->to($data['email']);
+            $correo->template('resetpassword');
+            $correo->viewVars(['data' => $data]);
+            $correo->emailFormat('html');
+            $correo->send();
+        } catch (Exception $e) {
+            $this->log($e->getMessage(),'debug');
+            echo 'Exception : ',  $e->getMessage(), "\n";
+        }
     }
     
     private function __emailBienVenida($data){

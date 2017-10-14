@@ -1,0 +1,22 @@
+span.drag-source {
+  border: 1px solid grey;
+  border-radius: 3px;
+  padding: 2px;
+  background-color: silver
+}
+
+ul.fancytree-container {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+span.fancytree-node.fancytree-drag-source {
+  outline: 1px dotted grey;
+}
+
+span.fancytree-node.fancytree-drop-accept {
+  outline: 1px dotted green;
+}
+span.fancytree-node.fancytree-drop-reject {
+  outline: 1px dotted red;
+}

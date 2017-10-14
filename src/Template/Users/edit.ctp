@@ -31,12 +31,11 @@
                         echo $this->Form->input('persona.apematerno', ['label'=>'Apellido Materno']);
                         echo $this->Form->input('persona.fechanacimiento', 
                             ['type'=>'text',
-                            'value'=> h($user['persona']->fechanacimiento),
+                            'value'=> h($user['persona']->fechanacimiento==''?'':date("d/m/Y", strtotime($user['persona']->fechanacimiento))),
                              'label'=>'Fecha Nacimiento', 
                              'class'=>'form-control datepicker',
                              'prepend' => $this->Icons->fa('calendar')
                              ]);
-            
                         echo $this->Form->input('email', [
                                 'label'=>__('Email (Se usara como nombre de usuario)'),
                                 'class'=>'form-control',
