@@ -43,7 +43,6 @@ class UsersController extends AppController
                 }
                 $this->Flash->error(__('Usuario o contraseña son incorrectos'));
             }
-            
         }
         $this->viewBuilder()->layout('login');
         $this->set('user', $user);
@@ -302,16 +301,17 @@ class UsersController extends AppController
                 if ($this->Users->save($user)){
                     $persona = $this->Users->Personas->get($user['persona_id']);
 
-                    $data = ['empresa'=>Configure::read('Company')];
+                    $data = ['empresa'=>Configure::read('empresa')];
+
                     $data['email'] = $emailUser;
                     $data['token']= $user['passtoken'];
-                    $data['titulo'] = Configure::read('Company')['name'].':: Dirección para Reseteo de Password';
+                    $data['titulo'] = Configure::read('empresa')['name'].':: Dirección para Reseteo de Password';
                     $data['persona'] = [
                         'nombres' => $persona['nombres'],
                         'apepaterno' => $persona['apepaterno'],
                         'apematerno' => $persona['apematerno']
                         ];
-                    
+
                     if ($this->__emailResetPass($data)){
                         $this->log('se envio correo','debug');
                         $envioCorreo = true;
@@ -395,6 +395,7 @@ class UsersController extends AppController
             $correo->template('resetpassword');
             $correo->viewVars(['data' => $data]);
             $correo->emailFormat('html');
+            $correo->subject($titulo);
             $correo->send();
         } catch (Exception $e) {
             $this->log($e->getMessage(),'debug');

@@ -22,7 +22,6 @@
 			<table style="width:40%;margin-left: 5%;margin-right: 5%;" align="left">
 				<tr>
 					<td>				
-													
 						<h5 class="">Información de contacto:</h5>												
 						<p>Telefono: <strong><?=$data['empresa']['telefonos']['lima']?></strong><br>
 						Email: <strong>

@@ -5,7 +5,7 @@
 
 <?= $this->Form->create($user,['role'=>'form', 'novalidate'=>'novalidate']) ?>
     <div class="form-group has-feedback">
-        <?=$this->Form->input('email', ['label'=>false,'placeholder'=>__('Username'), 'class'=>'form-control'])?>
+        <?=$this->Form->input('email', ['type' => 'text', 'label'=>false,'placeholder'=>__('Username'), 'class'=>'form-control'])?>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
     </div>
 

@@ -1,6 +1,6 @@
 <?php
 return [
-    'trujinet'=>[
+    'empresa'=>[
         'name' => 'Trujinet.com',
         'slogan' => 'SloganEmpresa',
         'dir' => 'Pais, Lugar direccion de la empresa 987',
