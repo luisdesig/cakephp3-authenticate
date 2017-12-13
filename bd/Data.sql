@@ -49,8 +49,8 @@ SELECT pg_catalog.setval('parametros_id_seq', 1, false);
 -- Data for Name: personas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO personas (id, nombres, apepaterno, apematerno, nombrecompleto, fechanacimiento, prmtipodocumento, numerodocumento, prmgenero, created, modified) VALUES (1, 'administrador', 'del sistema', 'sistema', 'administrador del sistema sistema', '1979-10-12', 1, '23456723', 1, '2016-12-15 00:00:00', '2017-06-20 05:27:08');
-INSERT INTO personas (id, nombres, apepaterno, apematerno, nombrecompleto, fechanacimiento, prmtipodocumento, numerodocumento, prmgenero, created, modified) VALUES (3, 'Luis Felipe', 'Aguilar', 'Pereda', 'Luis Felipe Aguilar Pereda', NULL, NULL, NULL, NULL, '2017-10-11 03:25:09', '2017-10-11 03:25:09');
+INSERT INTO personas (id, nombres, apepaterno, apematerno, nombrecompleto, fechanacimiento, prmtipodocumento, numerodocumento, prmgenero, created, modified) VALUES (1, 'administrador', 'del sistema', 'sistema', 'administrador del sistema sistema', '1979-10-12', 1, '23456723', 1, '2016-12-15 00:00:00', '2017-12-07 04:57:12');
+INSERT INTO personas (id, nombres, apepaterno, apematerno, nombrecompleto, fechanacimiento, prmtipodocumento, numerodocumento, prmgenero, created, modified) VALUES (3, 'Luis Felipe', 'Aguilar', 'Pereda', 'Luis Felipe Aguilar Pereda', '1979-10-12', NULL, NULL, NULL, '2017-10-11 03:25:09', '2017-12-07 14:51:40');
 
 
 --
@@ -64,23 +64,23 @@ SELECT pg_catalog.setval('personas_id_seq', 3, true);
 -- Data for Name: rolusers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO rolusers (id, user_id, prmrolusuario, activo, eliminado, created, modified) VALUES (6, 1, 7, 'S', 'N', '2017-06-20 05:27:15', '2017-06-20 05:27:15');
-INSERT INTO rolusers (id, user_id, prmrolusuario, activo, eliminado, created, modified) VALUES (10, 2, 7, 'S', 'N', '2017-10-14 05:22:25', '2017-10-14 05:22:25');
+INSERT INTO rolusers (id, user_id, prmrolusuario, activo, eliminado, created, modified) VALUES (16, 1, 7, 'S', 'N', '2017-12-07 04:57:12', '2017-12-07 04:57:12');
+INSERT INTO rolusers (id, user_id, prmrolusuario, activo, eliminado, created, modified) VALUES (17, 2, 7, 'S', 'N', '2017-12-07 14:51:41', '2017-12-07 14:51:41');
 
 
 --
 -- Name: rolusers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('rolusers_id_seq', 10, true);
+SELECT pg_catalog.setval('rolusers_id_seq', 17, true);
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO users (id, persona_id, nombrecompleto, email, username, password, passtoken, passtokenfecha, fotodir, foto, activo, eliminado, status, created, modified) VALUES (2, 3, 'Luis Felipe Aguilar Pereda', 'luis.aguilarpereda@gmail.com', 'luis.aguilarpereda@gmail.com', '$2y$10$ZOlUHxlNInkObhwNtm6CJOrgHXteM/xkwBHrOYdZjWCKQG9I//SCu', '', '2017-10-14 05:24:18', '69efb3b7-9dc7-40f6-9dd7-2ccd3116c844', 'ricardo.jpg', 'S', 'N', 1, '2017-10-11 03:25:09', '2017-10-14 05:35:03');
-INSERT INTO users (id, persona_id, nombrecompleto, email, username, password, passtoken, passtokenfecha, fotodir, foto, activo, eliminado, status, created, modified) VALUES (1, 1, 'administrador del sistema sistema', 'admin@admin.com', 'admin@admin.com', '$2y$10$.5BwWje6vLYfjsrELeNPzO2IGOXY.gFVEYax8n038kAhBhC0tGoYi', NULL, NULL, 'b8d7708b-22dd-482a-8694-0481545c57b3', '20151129_154444.jpg', 'S', 'N', 1, '2016-05-12 00:00:00', '2017-06-20 05:27:15');
+INSERT INTO users (id, persona_id, nombrecompleto, email, username, password, passtoken, passtokenfecha, fotodir, foto, activo, eliminado, status, created, modified) VALUES (1, 1, 'administrador del sistema sistema', 'admin@admin.com', 'admin@admin.com', '$2y$10$.5BwWje6vLYfjsrELeNPzO2IGOXY.gFVEYax8n038kAhBhC0tGoYi', NULL, NULL, 'b8d7708b-22dd-482a-8694-0481545c57b3', '20151129_154444.jpg', 'S', 'N', 1, '2016-05-12 00:00:00', '2017-12-07 04:57:12');
+INSERT INTO users (id, persona_id, nombrecompleto, email, username, password, passtoken, passtokenfecha, fotodir, foto, activo, eliminado, status, created, modified) VALUES (2, 3, 'Luis Felipe Aguilar Pereda', 'luis.aguilarpereda@gmail.com', 'luis.aguilarpereda@gmail.com', '$2y$10$kKDLpO9jq5lAHeWCbDzvTOVcb85q1P0NOpqftOeXX7oCQBWS5fQyS', '', '2017-11-13 20:19:11', '69efb3b7-9dc7-40f6-9dd7-2ccd3116c844', 'ricardo.jpg', 'S', 'N', 1, '2017-10-11 03:25:09', '2017-12-07 14:51:40');
 
 
 --
