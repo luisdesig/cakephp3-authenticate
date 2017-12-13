@@ -190,11 +190,9 @@ class UsersController extends AppController
                                                   .' '.$data['persona']['apematerno'];
             $data['nombrecompleto'] = $data['persona']['nombrecompleto'];
             $data['username'] = $data['email'];
-            debug($data['persona']['fechanacimiento']);
+            
             $data['persona']['fechanacimiento'] = $this->parseFechaPostgresql($data['persona']['fechanacimiento']);
-            debug($data['persona']['fechanacimiento']);
             $user = $this->Users->patchEntity($user, $data);
-
             if ($this->Users->save($user)) {
                 if ($this->Auth->User('id') ==$user['id']){
                     $modifico = true;
